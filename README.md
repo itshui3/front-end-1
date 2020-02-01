@@ -1,5 +1,7 @@
 I've created a development branch with a CRA (create-react-app) template. When you work on your own components, clone the development branch and create your own branch as usual. When you're ready to merge create a pull request into the development branch, NOT the master. We'll merge the development branch to the master when we have a working app.
 
+When you're ready to create a pull request into the development branch, add another react dev as a reviewer. We should go through the merge conflicts together to avoid breaking the app.
+
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
 ## Available Scripts
