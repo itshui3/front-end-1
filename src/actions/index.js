@@ -23,42 +23,42 @@ export const ADD_LISTING_FAILURE = "ADD_LISTING_FAILURE";
 export const DELETE_LISTING_SUCCESS = "DELETE_LISTING_SUCCESS";
 export const DELETE_LISTING_FAILURE = "DELETE_LISTING_FAILURE";
 
-export const register = creds => {
+export const register = creds => dispatch => {
     dispatch({ type: REGISTER_START }); //using loading spinners?
     //axios post call.
     //load token into localStorage
 }
 
-export const login = creds => {
+export const login = creds => dispatch => {
     dispatch({ type: LOGIN_START }); //using loading spinners?
     //axios post call.
     //load token into localStorage
 }
 
-export const login = () => {
+export const logout = () => dispatch => {
     //Take token out of state and local storage.
 }
 
-export const getData = () => {
+export const getData = () => dispatch => {
     dispatch({ type: GET_DATA_START }); //using loading spinners?
     //axios with auth get call for data when app loads (assuming user has token).
 }
 
-export const updateProfile = updatedProfile => {
+export const updateProfile = updatedProfile => dispatch => {
     dispatch({ type: UPDATE_PROFILE_START }); //using loading spinners?
     //axios with auth put call.
 }
 
-export const updateListing = updatedListing => {
+export const updateListing = updatedListing => dispatch => {
     dispatch({ type: UPDATE_LISTING_START }); //using loading spinners?
     //axios with auth put call.
 }
 
-export const addListing = addListing => {
+export const addListing = addListing => dispatch => {
     dispatch({ type: ADD_LISTING_START }); //using loading spinners?
     //axios with auth put call.
 }
 
-export const deleteListing = deleteListing => {
+export const deleteListing = deleteListing => dispatch => {
     //axios with auth delete call.
 }
