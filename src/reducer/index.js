@@ -1,5 +1,6 @@
 //optimal price stored in listing object?
 const initialState = {
+    token: ''
     profile: {},
     listings: [],
 }
