@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom';
 import { createStore, applyMiddleware } from 'redux';
 import { BrowserRouter as Router } from 'react-router-dom';
 import { Provider } from 'react-redux';
+import { BrowserRouter } from 'react-router-dom';
 import thunk from 'redux-thunk';
 import logger from 'redux-logger';
 import reducer from './reducer';
@@ -11,6 +12,7 @@ import App from './App';
 import * as serviceWorker from './serviceWorker';
 
 const store = createStore(reducer, applyMiddleware(thunk, logger));
+
 
 ReactDOM.render(<Router><Provider store={store}><App /></Provider></Router>, document.getElementById('root'));
 
