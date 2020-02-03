@@ -1,34 +1,36 @@
 import React from 'react';
-import { Link, Switch, Route } from 'react-router-dom';
+import { NavLink, Link, Switch, Route } from 'react-router-dom';
 import Listing from './components/Listing';
 import ListingForm from './components/ListingForm';
 import './App.css';
+import Login from './components/Login';
+import Signup from './components/Signup';
 
 function App() {
+
   return (
     <div className="App">
-      <ul>
-        <li>
-          <Link to='/login' >Login</Link>
-        </li>
-        <li>
+      <header>
+        <nav>
+          <NavLink to="/">Home</NavLink>
+          <NavLink to="/signup">Sign up</NavLink>
           <Link to='/protected' >Protected</Link>
-        </li>
-        <li>
           <Link to='/listing' >Listing Component</Link>
-        </li>
-        <li>
           <Link to='/listing-form' >Listing Form</Link>
-        </li>
-      </ul>
+        </nav>
+      </header>
+
       <Switch>
         {/* <PrivateRoute exact path='/protected' component={Profile} /> */}
-        {/* <Route path='/login' ><Login /></Route>
-        <Route><Login /></Route> */}
-
         {/* Will need an id to route to correct listing */}
         <Route path='/listing-form'><ListingForm /></Route>
         <Route path='/listing'><Listing /></Route>
+        <Route path="/signup">
+          <Signup />
+        </Route>
+        <Route path="/">
+          <Login />
+        </Route>
       </Switch>
     </div>
   );
