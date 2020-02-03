@@ -1,6 +1,9 @@
 import React, { useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { addListing } from '../actions';
 
 export default () => {
+    const addNewListing = useDispatch();
 
     const [listing, setListing] = useState({
         id: 0,
@@ -26,6 +29,7 @@ export default () => {
         //send listing to store
         //send info to backend axiosWithAuth
         console.log(listing);
+        return addNewListing(addListing(listing));
     }
 
     return (

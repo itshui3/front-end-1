@@ -1,3 +1,6 @@
+import { axiosWithAuth } from '../utils';
+import { useHistory } from 'react-router-dom';
+
 //These are not exhaustive nor will we necessarily use them all.
 //I'm trying to anticipate what actions will need.
 export const REGISTER_START = "REGISTER_START"; //using loading spinners?
@@ -54,9 +57,24 @@ export const updateListing = updatedListing => dispatch => {
     //axios with auth put call.
 }
 
-export const addListing = addListing => dispatch => {
+export const addListing = listing => dispatch => {
+    const history = useHistory();
     dispatch({ type: ADD_LISTING_START }); //using loading spinners?
     //axios with auth put call.
+    axiosWithAuth()
+        .post()
+        .then(res => {
+            console.log(res);
+            dispatch({ type: ADD_LISTING_SUCCESS, payload: listing});
+            //redirect back to profile.
+            history.push('/protected');
+        }).catch(err => {
+            //dispatch error
+            //redirect back to listing form
+            console.log(err);
+            dispatch({ type: ADD_LISTING_FAILURE, payload: err.data });
+            history.push('/listing-form');
+        });
 }
 
 export const deleteListing = deleteListing => dispatch => {

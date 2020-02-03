@@ -25,6 +25,10 @@ import {
 //optimal price stored in listing object?
 //This is a dummy state. We don't know what the state will look like yet.
 const initialState = {
+    isAdding: false,
+    isEditing: false,
+    isDeleting: false,
+    error: '',
     token: '',
     profile: {},
     listings: [],
@@ -68,11 +72,26 @@ const reducer = (state = initialState, action) => {
         case UPDATE_LISTING_FAILURE:
             return {}
         case ADD_LISTING_START: //using loading spinners?
-            return {}
+            return {
+                ...state,
+                isAdding: true,
+                error: ''
+            }
         case ADD_LISTING_SUCCESS:
-            return {}
+            return {
+                ...state,
+                isAdding: false,
+                listings: [
+                    ...state.listings,
+                    action.payload
+                ]
+            }
         case ADD_LISTING_FAILURE:
-            return {}
+            return {
+                ...state,
+                isAdding: false,
+                error: `Something went wrong. ${action.payload}`
+            }
         case DELETE_LISTING_SUCCESS:
             return {}
         case DELETE_LISTING_FAILURE:
