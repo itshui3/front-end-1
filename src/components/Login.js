@@ -4,7 +4,7 @@ import axios from 'axios';
 const Login = () => {
 
     const[values, setValues] = useState({
-        email: "",
+        username: "",
         password: ""
     })
 
@@ -35,7 +35,7 @@ const Login = () => {
         })
 
         setValues({
-            email: "",
+            username: "",
             password: ""
         })
     }
@@ -50,9 +50,9 @@ const Login = () => {
             <div>
             <form onSubmit={submitForm}>
                     <div>
-                        <label>Email Address</label>
+                        <label>Username</label>
                             <div>
-                            <input name="email" type="email" value={values.email} onChange={handleChange}/>
+                            <input name="username" type="text" value={values.username} onChange={handleChange}/>
                         </div>
                     </div>
                     <div>
