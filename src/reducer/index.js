@@ -30,6 +30,7 @@ const initialState = {
     isDeleting: false,
     error: '',
     token: '',
+    host_id: 0,
     profile: {},
     listings: [],
 }
@@ -66,11 +67,28 @@ const reducer = (state = initialState, action) => {
         case UPDATE_PROFILE_FAILURE:
             return {}
         case UPDATE_LISTING_START: //using loading spinners?
-            return {}
+            return {
+                ...state,
+                isEditing: true,
+                error: ''
+            }
         case UPDATE_LISTING_SUCCESS:
-            return {}
+            return {
+                ...state,
+                isEditing: false,
+                error: '',
+                listings: state.listings.map(listing => {
+                    if (listing.id === action.payload.id) {
+                        return action.payload;
+                    }
+                    return listing;
+                })
+            }
         case UPDATE_LISTING_FAILURE:
-            return {}
+            return {
+                ...state,
+                error: `Something went wrong. ${action.payload}`
+            }
         case ADD_LISTING_START: //using loading spinners?
             return {
                 ...state,
@@ -81,6 +99,7 @@ const reducer = (state = initialState, action) => {
             return {
                 ...state,
                 isAdding: false,
+                error: '',
                 listings: [
                     ...state.listings,
                     action.payload
@@ -89,7 +108,6 @@ const reducer = (state = initialState, action) => {
         case ADD_LISTING_FAILURE:
             return {
                 ...state,
-                isAdding: false,
                 error: `Something went wrong. ${action.payload}`
             }
         case DELETE_LISTING_SUCCESS:
