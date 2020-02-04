@@ -3,20 +3,19 @@ import { NavLink } from 'react-router-dom';
 import axios from 'axios';
 import './Login.css';
 
-const Login = () => {
+const Login = (props) => {
 
     const[values, setValues] = useState({
         username: "",
         password: ""
     })
 
-    const handleChange = event => {
-        const { name, value } = event.target
+    const handleChange = e => {
        // console.log(event.target.name);
        // console.log(event.target.value);
         setValues({
             ...values, 
-            [name]: value
+            [e.target.name]: e.target.value
         })
     }
 
@@ -28,8 +27,9 @@ const Login = () => {
         axios
         .post(`https://fast-scrubland-91418.herokuapp.com/api/auth/login`, values)
         .then(response => {
-            console.log(response);
             console.log(response.data);
+            props.history.push("/protected");
+            localStorage.setItem('token', response.data.token);
         })
         .catch(error => {
             console.log(error)
