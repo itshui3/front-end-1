@@ -26,6 +26,16 @@ export default props => {
         minNights: 1
     });
 
+    const hoods = ['Reinickendorf', 'Steglitz - Zehlendorf', 'Tempelhof - Schöneberg', 'Lichtenberg', 'Spandau', 'Charlottenburg-Wilm.', 'Friedrichshain-Kreuzberg', 'Pankow', 'Treptow - Köpenick', 'Mitte', 'Marzahn - Hellersdorf', 'Neukölln'];
+
+    const populateOptions = () => {
+        let i = -1;
+        return hoods.map(hood => {
+            i++;
+            return (<option key={i} value={hood}>{hood}</option>);
+        })
+    }
+
     const handleChange = e => {
         setListing({
             ...listing,
@@ -61,8 +71,6 @@ export default props => {
         return sendListingData(updateListing(listing));
     }
 
-    //Neighborhoods: ['Reinickendorf', 'Steglitz - Zehlendorf', 'Tempelhof - Schöneberg', 'Lichtenberg', 'Spandau', 'Charlottenburg-Wilm.', 'Friedrichshain-Kreuzberg', 'Pankow', 'Treptow - Köpenick', 'Mitte', 'Marzahn - Hellersdorf', 'Neukölln']
-
     //TODO: set up regex patterns
     return (
         <div>
@@ -73,16 +81,11 @@ export default props => {
                 <label>Listing Image</label>
                 <input type='url' name='image' placeholder='image url...' onChange={handleChange} value={listing.image} />
                 {isAddingImage ? (<img src={listing.image} alt='No Image Found' />) : (<></>)}
-                <label>Address</label>
+                <label>Neighborhood</label>
                 {/* TODO: Separate street, city, state, zip  required*/}
-                <label>Street</label>
-                <input type='text' name='street' placeholder='Street...' required onChange={handleChange} value={listing.street} required />
-                <label>City</label>
-                <input type='text' name='city' placeholder='City...' required onChange={handleChange} value={listing.city} required />
-                <label>State</label>
-                <input type='text' name='state' placeholder='State...' required onChange={handleChange} value={listing.state} required />
-                <label>Zip</label>
-                <input type='text' name='zip' placeholder='zip code...' required onChange={handleChange} value={listing.zip} required />
+                <select name='neighborhood' onChange={handleChange} >
+                    {populateOptions()}
+                </select>
                 <label>How many bedrooms?</label>
                 <input type='number' name='bedrooms' placeholder='Number of bedrooms...' onChange={handleChange} value={listing.bedrooms} />
                 <label>How many bathrooms?</label>
