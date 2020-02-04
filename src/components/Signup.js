@@ -1,5 +1,7 @@
 import React, {useState} from 'react';
+import { NavLink } from 'react-router-dom';
 import axios from 'axios';
+import './Signup.css';
 
 const Signup = (props) => {
 
@@ -39,26 +41,22 @@ const Signup = (props) => {
     }
 
     return (
-        <div>
-            <header>
-                Signup Page
-            </header>
-
-            <div>
+        <div className="signup-container">
+            <div className="signup-panel">
+                <img src="https://www.fodors.com/wp-content/uploads/2019/08/airbnb-hero-.jpg" alt="img"></img>
+                <h1>Sign Up</h1>
                 <form onSubmit={submitForm}>
                     <div>
-                        <label>Create username</label>
-                            <div>
-                            <input name="username" type="text" value={values.username} onChange={handleChange}/>
-                        </div>
+                        <input className="input-panel" name="username" type="text" value={values.username} onChange={handleChange} placeholder="Create Username"/>
                     </div>
                     <div>
-                        <label>Create a password</label>
-                            <div>
-                            <input name="password" type="password" value={values.password} onChange={handleChange}/>
-                        </div>
+                        <input className="input-panel" name="password" type="password" value={values.password} onChange={handleChange} placeholder="Create Password"/>
                     </div>
-                    <button type="submit">Sign up</button>
+                    <button className="signupBtn" type="submit">Sign up</button>
+                    <div className="signup-panel-btm">
+                    <label>Already have an account?</label>
+                    <button className="signUpBtn"><NavLink to="/">Log in</NavLink></button>
+                    </div>
                 </form>
             </div>
         </div>
