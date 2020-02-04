@@ -55,26 +55,32 @@ export const updateProfile = updatedProfile => dispatch => {
 export const updateListing = updatedListing => dispatch => {
     dispatch({ type: UPDATE_LISTING_START }); //using loading spinners?
     //axios with auth put call.
-}
-
-export const addListing = listing => dispatch => {
-    const history = useHistory();
-    dispatch({ type: ADD_LISTING_START }); //using loading spinners?
-    //axios with auth put call.
     axiosWithAuth()
         .post()
         .then(res => {
             console.log(res);
-            dispatch({ type: ADD_LISTING_SUCCESS, payload: listing});
-            //redirect back to profile.
-            history.push('/protected');
+            dispatch({ type: UPDATE_LISTING_SUCCESS, payload: updatedListing});
         }).catch(err => {
             //dispatch error
-            //redirect back to listing form
             console.log(err);
-            dispatch({ type: ADD_LISTING_FAILURE, payload: err.data });
-            history.push('/listing-form');
+            dispatch({ type: UPDATE_LISTING_FAILURE, payload: err.data });
         });
+}
+
+export const addListing = listing => dispatch => {
+    dispatch({ type: ADD_LISTING_START }); //using loading spinners?
+    //axios with auth put call.
+    dispatch({ type: ADD_LISTING_SUCCESS, payload: listing});
+    // axiosWithAuth()
+    //     .post()
+    //     .then(res => {
+    //         console.log(res);
+    //         dispatch({ type: ADD_LISTING_SUCCESS, payload: listing});
+    //     }).catch(err => {
+    //         //dispatch error
+    //         console.log(err);
+    //         dispatch({ type: ADD_LISTING_FAILURE, payload: err.data });
+    //     });
 }
 
 export const deleteListing = deleteListing => dispatch => {

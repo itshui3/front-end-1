@@ -6,8 +6,8 @@ export default props => {
     return (
         <div>
             <img />
-            <p>{}</p>
-    <p>Beds: {}</p>
+            <p>neighborhood</p>
+            <p>Beds: {}</p>
             <p>Baths: </p>
             <p>Security Deposit: </p>
             <p>Cleaning Fee: </p>
