@@ -1,10 +1,12 @@
 import React, {useState} from 'react';
 import axios from 'axios';
+import { useHistory } from 'react-router-dom';
 
 const Login = () => {
+    const history = useHistory();
 
     const[values, setValues] = useState({
-        email: "",
+        username: "",
         password: ""
     })
 
@@ -22,13 +24,12 @@ const Login = () => {
      //Axios to server
     const submitForm = event => {
         event.preventDefault();
-        console.log(values);
 
         axios
         .post(`https://fast-scrubland-91418.herokuapp.com/api/auth/login`, values)
         .then(response => {
-            console.log(response);
-            console.log(response.data);
+            localStorage.setItem('token', response.data.token);
+            history.push(`/protected/${response.data.resource.id}`);
         })
         .catch(error => {
             console.log(error)
@@ -52,7 +53,7 @@ const Login = () => {
                     <div>
                         <label>Email Address</label>
                             <div>
-                            <input name="email" type="email" value={values.email} onChange={handleChange}/>
+                            <input name="username" type="text" value={values.username} onChange={handleChange}/>
                         </div>
                     </div>
                     <div>

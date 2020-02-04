@@ -1,5 +1,4 @@
 import { axiosWithAuth } from '../utils';
-import { useHistory } from 'react-router-dom';
 
 //These are not exhaustive nor will we necessarily use them all.
 //I'm trying to anticipate what actions will need.
@@ -42,9 +41,14 @@ export const logout = () => dispatch => {
     //Take token out of state and local storage.
 }
 
-export const getData = () => dispatch => {
+export const getData = hostID => dispatch => {
     dispatch({ type: GET_DATA_START }); //using loading spinners?
     //axios with auth get call for data when app loads (assuming user has token).
+    axiosWithAuth()
+    .get(`api/restricted/listings/${hostID}`)
+    .then(res => {
+        dispatch({ type: GET_DATA_SUCCESS, payload: res.data.resource});
+    }).catch(err => console.log(err));
 }
 
 export const updateProfile = updatedProfile => dispatch => {
@@ -56,31 +60,25 @@ export const updateListing = updatedListing => dispatch => {
     dispatch({ type: UPDATE_LISTING_START }); //using loading spinners?
     //axios with auth put call.
     axiosWithAuth()
-        .post()
-        .then(res => {
-            console.log(res);
-            dispatch({ type: UPDATE_LISTING_SUCCESS, payload: updatedListing});
-        }).catch(err => {
-            //dispatch error
-            console.log(err);
-            dispatch({ type: UPDATE_LISTING_FAILURE, payload: err.data });
-        });
+    .put(`api/restricted/listings/${updatedListing.id}`, updatedListing)
+    .then(res => {
+        dispatch({ type: UPDATE_LISTING_SUCCESS, payload: updatedListing});
+    }).catch(err => {
+        //dispatch error
+        console.log(err);
+        dispatch({ type: UPDATE_LISTING_FAILURE, payload: err.data });
+    });
 }
 
 export const addListing = listing => dispatch => {
     dispatch({ type: ADD_LISTING_START }); //using loading spinners?
     //axios with auth put call.
-    dispatch({ type: ADD_LISTING_SUCCESS, payload: listing});
-    // axiosWithAuth()
-    //     .post()
-    //     .then(res => {
-    //         console.log(res);
-    //         dispatch({ type: ADD_LISTING_SUCCESS, payload: listing});
-    //     }).catch(err => {
-    //         //dispatch error
-    //         console.log(err);
-    //         dispatch({ type: ADD_LISTING_FAILURE, payload: err.data });
-    //     });
+    axiosWithAuth()
+        .post(`api/restricted/listings`, listing)
+        .then(res => {
+            //Change to not an array
+            dispatch({ type: ADD_LISTING_SUCCESS, payload: res.data.resource[0]});
+        }).catch(err => console.log(err));
 }
 
 export const deleteListing = deleteListing => dispatch => {

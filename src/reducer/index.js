@@ -28,6 +28,7 @@ const initialState = {
     isAdding: false,
     isEditing: false,
     isDeleting: false,
+    isGetting: true,
     error: '',
     token: '',
     host_id: 0,
@@ -55,11 +56,24 @@ const reducer = (state = initialState, action) => {
         case LOGOUT:
             return {}
         case GET_DATA_START: //using loading spinners?
-            return {}
+            return {
+                ...state,
+                isGetting: true,
+                error: ''
+            }
         case GET_DATA_SUCCESS:
-            return {}
+            return {
+                ...state,
+                isGetting: false,
+                listings: action.payload,
+                error: ''
+            }
         case GET_DATA_FAILURE:
-            return {}
+            return {
+                ...state,
+                isGetting: false,
+                error: action.payload
+            }
         case UPDATE_PROFILE_START: //using loading spinners?
             return {}
         case UPDATE_PROFILE_SUCCESS:

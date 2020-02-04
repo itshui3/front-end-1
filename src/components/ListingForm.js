@@ -1,9 +1,11 @@
 import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { addListing, updateListing } from '../actions';
+import { useHistory } from 'react-router-dom';
 
 //Defaults as an edit form.
 export default props => {
+    const history = useHistory();
     const sendListingData = useDispatch();
     const hostID = useSelector(state => state.host_id);
     const [isAddingImage, setIsAddingImage] = useState(false);
@@ -11,8 +13,8 @@ export default props => {
     //sets listing to default or listing object from store if editing
     const [listing, setListing] = useState(isEditing ? 
         useSelector(state => state.listings[props.listingID]) : {
-        host_id: 0,
-        id: 0,
+        host_id: 4,
+        // id: 0,
         image: '',
         neighborhood: '',
         bedrooms: 1,
@@ -45,16 +47,9 @@ export default props => {
 
     const addNewListing = e => {
         e.preventDefault();
-        //send listing to store
         //get the host_id from the state
-        const listingToAdd = {...listing, host_id: hostID};
-        //send info to backend axiosWithAuth
-        //redirect back to profile on success
-        // history.push('/protected');
-        //redirect back to listing form on failure with error
-        // history.push('/listing-form');
-        console.log(listing);
-        //DO NOT SEND ID
+        const listingToAdd = {...listing, host_id: hostID}; //Change from being hard-coded
+        history.push('/protected');
         return sendListingData(addListing(listingToAdd));
     }
 
@@ -65,6 +60,7 @@ export default props => {
         // history.push('/protected');
         //redirect back to listing form on failure with error
         // history.push('/listing-form');
+        history.push('/protected');
         return sendListingData(updateListing(listing));
     }
 

@@ -5,6 +5,8 @@ import ListingForm from './components/ListingForm';
 import './App.css';
 import Login from './components/Login';
 import Signup from './components/Signup';
+import Profile from './components/Profile';
+import PrivateRoute from './components/PrivateRoute';
 
 function App() {
 
@@ -15,16 +17,15 @@ function App() {
           <NavLink to="/">Home</NavLink>
           <NavLink to="/signup">Sign up</NavLink>
           <Link to='/protected' >Protected</Link>
-          <Link to='/listing' >Listing Component</Link>
           <Link to='/listing-form' >Listing Form</Link>
         </nav>
       </header>
 
       <Switch>
-        {/* <PrivateRoute exact path='/protected' component={Profile} /> */}
+        <PrivateRoute path='/protected/:id' component={Profile} />
+        {/* <Route path='/protected'><Profile /></Route> */}
         {/* Will need an id to route to correct listing */}
         <Route path='/listing-form'><ListingForm /></Route>
-        <Route path='/listing'><Listing /></Route>
         <Route path="/signup">
           <Signup />
         </Route>

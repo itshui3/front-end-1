@@ -1,7 +1,9 @@
 import React, {useState} from 'react';
 import axios from 'axios';
+import { useHistory } from 'react-router-dom';
 
 const Signup = (props) => {
+    const history = useHistory();
 
     const[values, setValues] = useState({
         email: "",
@@ -25,10 +27,9 @@ const Signup = (props) => {
 
         //Axios to server
         axios
-        .post(`https://fast-scrubland-91418.herokuapp.com/api/auth/registerHost`, values)
+        .post(`https://fast-scrubland-91418.herokuapp.com/api/auth/registerHost`, {username: values.firstName, password: values.password})
         .then(response => {
-            console.log(response);
-            console.log(response.data);
+            history.push('/login');
         })
         .catch(error => {
             console.log(error)
