@@ -14,16 +14,13 @@ export default props => {
         host_id: 0,
         id: 0,
         image: '',
-        street: '',
-        city: '',
-        state: '',
-        zip: '',
+        neighborhood: '',
         bedrooms: 1,
         bathrooms: 1,
         beds: 1,
         deposit: 0,
-        cleaningFee: 0,
-        minNights: 1
+        cleaning_fee: 0,
+        min_nights: 1
     });
 
     const hoods = ['Reinickendorf', 'Steglitz - Zehlendorf', 'Tempelhof - Schöneberg', 'Lichtenberg', 'Spandau', 'Charlottenburg-Wilm.', 'Friedrichshain-Kreuzberg', 'Pankow', 'Treptow - Köpenick', 'Mitte', 'Marzahn - Hellersdorf', 'Neukölln'];
@@ -95,9 +92,9 @@ export default props => {
                 <label>Security Deposit</label>
                 <input type='number' name='deposit' placeholder='Security Deposit' onChange={handleChange} value={listing.deposit} />
                 <label>Cleaning Fee</label>
-                <input type='number' name='cleaningFee' placeholder='Cleaning Fee' onChange={handleChange} value={listing.cleaningFee} />
+                <input type='number' name='cleaning_fee' placeholder='Cleaning Fee' onChange={handleChange} value={listing.cleaning_fee} />
                 <label>Minimum Nights Stay</label>
-                <input type='number' name='minNights' placeholder='Minimum Nights Stay' onChange={handleChange} value={listing.minNights} />
+                <input type='number' name='min_nights' placeholder='Minimum Nights Stay' onChange={handleChange} value={listing.min_nights} />
                 <button type='submit'>Add Listing</button>
             </form>
         </div>
