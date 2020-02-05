@@ -17,7 +17,7 @@ export default () => {
             dispatch(getData(hostID));
         }
         dispatch(setHostID(hostID));
-    }, [])
+    })
 
     const handleClick = () => {
         history.push('/listing-form');

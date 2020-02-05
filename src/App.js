@@ -1,7 +1,5 @@
 import React from 'react';
-import { NavLink, Link, Switch, Route } from 'react-router-dom';
-import { useSelector } from 'react-redux';
-import Listing from './components/Listing';
+import { NavLink, Switch, Route } from 'react-router-dom';
 import ListingForm from './components/ListingForm';
 import './App.css';
 import Login from './components/Login';
@@ -10,7 +8,6 @@ import Profile from './components/Profile';
 import PrivateRoute from './components/PrivateRoute';
 
 function App() {
-  const hostID = useSelector(state => state.host_id);
   return (
     <div className="App">
       <header>
