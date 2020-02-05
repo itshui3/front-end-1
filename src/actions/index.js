@@ -58,16 +58,15 @@ export const updateProfile = updatedProfile => dispatch => {
 }
 
 export const updateListing = updatedListing => dispatch => {
-    dispatch({ type: UPDATE_LISTING_START }); //using loading spinners?
-    //axios with auth put call.
     axiosWithAuth()
-    .put(`api/restricted/listings/${updatedListing.id}`, updatedListing)
-    .then(res => {
-        dispatch({ type: UPDATE_LISTING_SUCCESS, payload: updatedListing});
-    }).catch(err => {
-        //dispatch error
-        dispatch({ type: UPDATE_LISTING_FAILURE, payload: err.data });
-    });
+        .put(`api/restricted/listings/${updatedListing.id}`, updatedListing)
+        .then(res => {
+            console.log('this is res in updateListing in actions: ', res);
+            dispatch({ type: UPDATE_LISTING_SUCCESS, payload: res.data.resource});
+        }).catch(err => {
+            //dispatch error
+            dispatch({ type: UPDATE_LISTING_FAILURE, payload: err.data });
+        });
 }
 
 export const addListing = listing => dispatch => {
@@ -91,4 +90,8 @@ export const deleteListing = id => dispatch => {
 
 export const setHostID = hostID => dispatch => {
     dispatch({ type: SET_HOST, payload: hostID });
+}
+
+export const setIsEditing = () => dispatch => {
+    dispatch({ type: UPDATE_LISTING_START });
 }

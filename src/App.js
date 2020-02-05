@@ -32,6 +32,7 @@ function App() {
         <PrivateRoute path='/protected/:id' component={Profile} />
         {/* <Route path='/protected'><Profile /></Route> */}
         {/* Will need an id to route to correct listing */}
+        <Route path='/listing-form/:id'><ListingForm /></Route>
         <Route path='/listing-form'><ListingForm /></Route>
         <Route path='/listing'><Listing /></Route>
         <Route path="/signup"><Signup /></Route>
