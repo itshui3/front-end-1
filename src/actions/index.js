@@ -1,8 +1,5 @@
 import { axiosWithAuth } from '../utils';
-import { useHistory } from 'react-router-dom';
 
-//These are not exhaustive nor will we necessarily use them all.
-//I'm trying to anticipate what actions will need.
 export const REGISTER_START = "REGISTER_START"; //using loading spinners?
 export const REGISTER_SUCCESS = "REGISTER_SUCCESS";
 export const REGISTER_FAILURE = "REGISTER_FAILURE";
@@ -25,6 +22,7 @@ export const ADD_LISTING_SUCCESS = "ADD_LISTING_SUCCESS";
 export const ADD_LISTING_FAILURE = "ADD_LISTING_FAILURE";
 export const DELETE_LISTING_SUCCESS = "DELETE_LISTING_SUCCESS";
 export const DELETE_LISTING_FAILURE = "DELETE_LISTING_FAILURE";
+export const SET_HOST = 'SET_HOST';
 
 export const register = creds => dispatch => {
     dispatch({ type: REGISTER_START }); //using loading spinners?
@@ -42,9 +40,14 @@ export const logout = () => dispatch => {
     //Take token out of state and local storage.
 }
 
-export const getData = () => dispatch => {
+export const getData = hostID => dispatch => {
     dispatch({ type: GET_DATA_START }); //using loading spinners?
-    //axios with auth get call for data when app loads (assuming user has token).
+
+    axiosWithAuth()
+        .get(`api/restricted/listings/${parseInt(hostID)}`)
+        .then(res => {
+            dispatch({ type: GET_DATA_SUCCESS, payload: res.data.resource});
+        }).catch(err => console.log(err));
 }
 
 export const updateProfile = updatedProfile => dispatch => {
@@ -53,36 +56,36 @@ export const updateProfile = updatedProfile => dispatch => {
 }
 
 export const updateListing = updatedListing => dispatch => {
-    dispatch({ type: UPDATE_LISTING_START }); //using loading spinners?
-    //axios with auth put call.
     axiosWithAuth()
-        .post()
+        .put(`api/restricted/listings/${updatedListing.id}`, updatedListing)
         .then(res => {
-            console.log(res);
-            dispatch({ type: UPDATE_LISTING_SUCCESS, payload: updatedListing});
+            dispatch({ type: UPDATE_LISTING_SUCCESS, payload: res.data.resource});
         }).catch(err => {
-            //dispatch error
-            console.log(err);
             dispatch({ type: UPDATE_LISTING_FAILURE, payload: err.data });
         });
 }
 
 export const addListing = listing => dispatch => {
     dispatch({ type: ADD_LISTING_START }); //using loading spinners?
-    //axios with auth put call.
-    dispatch({ type: ADD_LISTING_SUCCESS, payload: listing});
-    // axiosWithAuth()
-    //     .post()
-    //     .then(res => {
-    //         console.log(res);
-    //         dispatch({ type: ADD_LISTING_SUCCESS, payload: listing});
-    //     }).catch(err => {
-    //         //dispatch error
-    //         console.log(err);
-    //         dispatch({ type: ADD_LISTING_FAILURE, payload: err.data });
-    //     });
+
+    axiosWithAuth()
+        .post(`api/restricted/listings`, listing).then(res => {
+            //Change to not an array
+            dispatch({ type: ADD_LISTING_SUCCESS, payload: res.data.resource});
+        }).catch(err => console.log(err));
 }
 
-export const deleteListing = deleteListing => dispatch => {
-    //axios with auth delete call.
+export const deleteListing = id => dispatch => {
+    axiosWithAuth().delete(`api/restricted/listings/${id}`)
+        .then(res => {
+            dispatch({ type: DELETE_LISTING_SUCCESS, payload: parseInt(id)});
+        }).catch(err => console.log(err));
+}
+
+export const setHostID = hostID => dispatch => {
+    dispatch({ type: SET_HOST, payload: hostID });
+}
+
+export const setIsEditing = () => dispatch => {
+    dispatch({ type: UPDATE_LISTING_START });
 }

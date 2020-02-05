@@ -77,3 +77,13 @@
         text-align: center;
   }
 
+.listing-container {
+  width: 400px;
+  margin: 20px;
+}
+
+.profile-listings {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+}

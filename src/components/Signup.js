@@ -1,9 +1,11 @@
 import React, {useState} from 'react';
 import { NavLink } from 'react-router-dom';
 import axios from 'axios';
+import { useHistory } from 'react-router-dom';
 import './Signup.css';
 
 const Signup = (props) => {
+    const history = useHistory();
 
     const[values, setValues] = useState({
         username: "",
@@ -12,8 +14,6 @@ const Signup = (props) => {
 
     const handleChange = event => {
         const { name, value } = event.target
-      //  console.log(event.target.name);
-      //  console.log(event.target.value);
         setValues({
             ...values, 
             [name]: value
@@ -23,12 +23,10 @@ const Signup = (props) => {
     const submitForm = event => {
         event.preventDefault();
 
-        //Axios to server
         axios
-        .post(`https://fast-scrubland-91418.herokuapp.com/api/auth/registerHost`, values)
+        .post(`https://fast-scrubland-91418.herokuapp.com/api/auth/registerHost`, {username: values.firstName, password: values.password})
         .then(response => {
-            console.log(response);
-            console.log(response.data);
+            history.push('/login');
         })
         .catch(error => {
             console.log(error)
