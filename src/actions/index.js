@@ -24,6 +24,7 @@ export const ADD_LISTING_SUCCESS = "ADD_LISTING_SUCCESS";
 export const ADD_LISTING_FAILURE = "ADD_LISTING_FAILURE";
 export const DELETE_LISTING_SUCCESS = "DELETE_LISTING_SUCCESS";
 export const DELETE_LISTING_FAILURE = "DELETE_LISTING_FAILURE";
+export const SET_HOST = 'SET_HOST';
 
 export const register = creds => dispatch => {
     dispatch({ type: REGISTER_START }); //using loading spinners?
@@ -45,10 +46,10 @@ export const getData = hostID => dispatch => {
     dispatch({ type: GET_DATA_START }); //using loading spinners?
     //axios with auth get call for data when app loads (assuming user has token).
     axiosWithAuth()
-    .get(`api/restricted/listings/${hostID}`)
-    .then(res => {
-        dispatch({ type: GET_DATA_SUCCESS, payload: res.data.resource});
-    }).catch(err => console.log(err));
+        .get(`api/restricted/listings/${parseInt(hostID)}`)
+        .then(res => {
+            dispatch({ type: GET_DATA_SUCCESS, payload: res.data.resource});
+        }).catch(err => console.log(err));
 }
 
 export const updateProfile = updatedProfile => dispatch => {
@@ -65,7 +66,6 @@ export const updateListing = updatedListing => dispatch => {
         dispatch({ type: UPDATE_LISTING_SUCCESS, payload: updatedListing});
     }).catch(err => {
         //dispatch error
-        console.log(err);
         dispatch({ type: UPDATE_LISTING_FAILURE, payload: err.data });
     });
 }
@@ -73,14 +73,22 @@ export const updateListing = updatedListing => dispatch => {
 export const addListing = listing => dispatch => {
     dispatch({ type: ADD_LISTING_START }); //using loading spinners?
     //axios with auth put call.
+    console.log('this is listing inside of addListing: ', listing);
     axiosWithAuth()
-        .post(`api/restricted/listings`, listing)
-        .then(res => {
+        .post(`api/restricted/listings`, listing).then(res => {
             //Change to not an array
-            dispatch({ type: ADD_LISTING_SUCCESS, payload: res.data.resource[0]});
+            dispatch({ type: ADD_LISTING_SUCCESS, payload: res.data.resource});
         }).catch(err => console.log(err));
 }
 
-export const deleteListing = deleteListing => dispatch => {
+export const deleteListing = id => dispatch => {
     //axios with auth delete call.
+    axiosWithAuth().delete(`api/restricted/listings/${id}`)
+        .then(res => {
+            dispatch({ type: DELETE_LISTING_SUCCESS, payload: parseInt(id)});
+        }).catch(err => console.log(err));
+}
+
+export const setHostID = hostID => dispatch => {
+    dispatch({ type: SET_HOST, payload: hostID });
 }

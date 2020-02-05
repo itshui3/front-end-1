@@ -3,19 +3,25 @@ import { useParams } from 'react-router';
 import { useHistory } from 'react-router-dom';
 import axios from 'axios';
 import { useDispatch, useSelector } from 'react-redux';
-import { getData } from '../actions';
+import { getData, setHostID } from '../actions';
 import Listing from './Listing';
 
 export default () => {
-    const hostID = useParams();
+    //TODO: What to do with errors?
+
+    const params = useParams();
     const history = useHistory();
     const listings = useSelector(state => state.listings);
     const isGetting = useSelector(state => state.isGetting);
-    const sendListingsToStore = useDispatch();
-    console.log('host id in Profile: ', hostID);
+    const dispatch = useDispatch();
+
+    //set host_id in store
 
     useEffect(() => {
-        sendListingsToStore(getData(hostID));
+        if (listings.length === 0) {
+            dispatch(getData(params.id));
+        }
+        dispatch(setHostID(params.id));
     }, [])
 
     const handleClick = () => {
@@ -26,7 +32,6 @@ export default () => {
         if (isGetting) {
             return (<p>Fetching listing data...</p>);
         }
-        console.log(listings);
         return listings.map(listing => {
             return (<Listing key={listing.id} listingID={listing.id} />);
         })
@@ -35,7 +40,9 @@ export default () => {
         <div>
             <h1>My Listings</h1>
             <button onClick={handleClick}>Add Listing</button>
-            {propagateListings()}
+            <div className='profile-listings'>
+                {propagateListings()}
+            </div>
         </div>
     );
 }

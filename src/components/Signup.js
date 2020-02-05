@@ -1,14 +1,14 @@
 import React, {useState} from 'react';
+import { NavLink } from 'react-router-dom';
 import axios from 'axios';
 import { useHistory } from 'react-router-dom';
+import './Signup.css';
 
 const Signup = (props) => {
     const history = useHistory();
 
     const[values, setValues] = useState({
-        email: "",
-        firstName: "",
-        lastName: "",
+        username: "",
         password: ""
     })
 
@@ -36,46 +36,28 @@ const Signup = (props) => {
         })
 
         setValues({
-            email: "",
-            firstName: "",
-            lastName: "",
+            username: "",
             password: ""
         })
     }
 
     return (
-        <div>
-            <header>
-                Signup Page
-            </header>
-
-            <div>
+        <div className="signup-container">
+            <div className="signup-panel">
+                <img src="https://www.fodors.com/wp-content/uploads/2019/08/airbnb-hero-.jpg" alt="img"></img>
+                <h1>Sign Up</h1>
                 <form onSubmit={submitForm}>
                     <div>
-                        <label>Email Address</label>
-                            <div>
-                            <input name="email" type="email" value={values.email} onChange={handleChange}/>
-                        </div>
+                        <input className="input-panel" name="username" type="text" value={values.username} onChange={handleChange} placeholder="Create Username"/>
                     </div>
                     <div>
-                        <label>First name</label>
-                            <div>
-                            <input name="firstName" type="text" value={values.firstName} onChange={handleChange}/>
-                        </div>
+                        <input className="input-panel" name="password" type="password" value={values.password} onChange={handleChange} placeholder="Create Password"/>
                     </div>
-                    <div>
-                        <label>Last name</label>
-                            <div>
-                            <input name="lastName" type="text" value={values.lastName} onChange={handleChange}/>
-                        </div>
+                    <button className="signupBtn" type="submit">Sign up</button>
+                    <div className="signup-panel-btm">
+                    <label>Already have an account?</label>
+                    <button className="signUpBtn"><NavLink to="/">Log in</NavLink></button>
                     </div>
-                    <div>
-                        <label>Create a password</label>
-                            <div>
-                            <input name="password" type="password" value={values.password} onChange={handleChange}/>
-                        </div>
-                    </div>
-                    <button type="submit">Sign up</button>
                 </form>
             </div>
         </div>

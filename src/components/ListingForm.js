@@ -13,25 +13,36 @@ export default props => {
     //sets listing to default or listing object from store if editing
     const [listing, setListing] = useState(isEditing ? 
         useSelector(state => state.listings[props.listingID]) : {
-        host_id: 4,
+        host_id: hostID,
         // id: 0,
         image: '',
-        neighborhood: '',
+        neighborhood: 'Reinickendorf',
+        room_type: 'Entire home/apt',
         bedrooms: 1,
         bathrooms: 1,
         beds: 1,
-        deposit: 0,
-        cleaning_fee: 0,
+        deposit: 5.00,
+        cleaning_fee: 5.00,
         min_nights: 1
     });
 
     const hoods = ['Reinickendorf', 'Steglitz - Zehlendorf', 'Tempelhof - Schöneberg', 'Lichtenberg', 'Spandau', 'Charlottenburg-Wilm.', 'Friedrichshain-Kreuzberg', 'Pankow', 'Treptow - Köpenick', 'Mitte', 'Marzahn - Hellersdorf', 'Neukölln'];
 
-    const populateOptions = () => {
+    const roomTypes = ['Entire home/apt', 'Private room', 'Shared room', 'Hotel room'];
+
+    const populateHoodOptions = () => {
         let i = -1;
         return hoods.map(hood => {
             i++;
             return (<option key={i} value={hood}>{hood}</option>);
+        })
+    }
+
+    const populateRoomTypeOptions = () => {
+        let i = -1;
+        return roomTypes.map(room => {
+            i++;
+            return (<option key={i} value={room}>{room}</option>);
         })
     }
 
@@ -48,8 +59,9 @@ export default props => {
     const addNewListing = e => {
         e.preventDefault();
         //get the host_id from the state
-        const listingToAdd = {...listing, host_id: hostID}; //Change from being hard-coded
-        history.push('/protected');
+        const listingToAdd = {...listing, host_id: parseInt(hostID)}; //Change from being hard-coded
+        console.log('This is listingToAdd in ListingForm: ', listingToAdd);
+        history.push(`/protected/${hostID}`);
         return sendListingData(addListing(listingToAdd));
     }
 
@@ -77,7 +89,10 @@ export default props => {
                 <label>Neighborhood</label>
                 {/* TODO: Separate street, city, state, zip  required*/}
                 <select name='neighborhood' onChange={handleChange} >
-                    {populateOptions()}
+                    {populateHoodOptions()}
+                </select>
+                <select name='room_type' onChange={handleChange} >
+                    {populateRoomTypeOptions()}
                 </select>
                 <label>How many bedrooms?</label>
                 <input type='number' name='bedrooms' placeholder='Number of bedrooms...' onChange={handleChange} value={listing.bedrooms} />

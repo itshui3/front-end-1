@@ -19,7 +19,8 @@ import {
     ADD_LISTING_SUCCESS,
     ADD_LISTING_FAILURE,
     DELETE_LISTING_SUCCESS,
-    DELETE_LISTING_FAILURE
+    DELETE_LISTING_FAILURE,
+    SET_HOST
   } from "../actions";
 
 //optimal price stored in listing object?
@@ -125,9 +126,21 @@ const reducer = (state = initialState, action) => {
                 error: `Something went wrong. ${action.payload}`
             }
         case DELETE_LISTING_SUCCESS:
-            return {}
+            return {
+                ...state,
+                listings: state.listings.filter(listing => listing.id !== action.payload),
+                error: ''
+            }
         case DELETE_LISTING_FAILURE:
-            return {}
+            return {
+                ...state,
+                error: action.payload
+            }
+        case SET_HOST:
+            return {
+                ...state,
+                host_id: action.payload
+            }
         default:
             return state;
     }

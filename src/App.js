@@ -13,11 +13,18 @@ function App() {
   return (
     <div className="App">
       <header>
-        <nav>
-          <NavLink to="/">Home</NavLink>
-          <NavLink to="/signup">Sign up</NavLink>
-          <Link to='/protected' >Protected</Link>
-          <Link to='/listing-form' >Listing Form</Link>
+        <nav className="nav-container">
+        <div className="nav-left">
+            <i className="fas fa-chart-area fa-3x" id="logo"></i>
+        </div>
+        <div className="nav-right">
+          <a href="https://rg-optimalpricer.netlify.com/">Home</a>
+          <NavLink to='/' >Log In</NavLink>
+          <NavLink to='/signup' >Sign Up</NavLink>
+          <NavLink to='/protected' >Protected</NavLink>
+          <NavLink to='/listing' >Listing Component</NavLink>
+          <NavLink to='/listing-form' >Listing Form</NavLink>
+        </div>
         </nav>
       </header>
 
@@ -26,12 +33,9 @@ function App() {
         {/* <Route path='/protected'><Profile /></Route> */}
         {/* Will need an id to route to correct listing */}
         <Route path='/listing-form'><ListingForm /></Route>
-        <Route path="/signup">
-          <Signup />
-        </Route>
-        <Route path="/">
-          <Login />
-        </Route>
+        <Route path='/listing'><Listing /></Route>
+        <Route path="/signup"><Signup /></Route>
+        <Route path="/"><Login /></Route>
       </Switch>
     </div>
   );
