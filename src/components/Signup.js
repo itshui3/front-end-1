@@ -14,8 +14,6 @@ const Signup = (props) => {
 
     const handleChange = event => {
         const { name, value } = event.target
-      //  console.log(event.target.name);
-      //  console.log(event.target.value);
         setValues({
             ...values, 
             [name]: value
@@ -25,7 +23,6 @@ const Signup = (props) => {
     const submitForm = event => {
         event.preventDefault();
 
-        //Axios to server
         axios
         .post(`https://fast-scrubland-91418.herokuapp.com/api/auth/registerHost`, {username: values.firstName, password: values.password})
         .then(response => {

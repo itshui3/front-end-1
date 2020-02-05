@@ -1,27 +1,22 @@
-import React, { useState, useEffect } from 'react';
-import { useParams } from 'react-router';
+import React, { useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
-import axios from 'axios';
 import { useDispatch, useSelector } from 'react-redux';
 import { getData, setHostID } from '../actions';
 import Listing from './Listing';
 
 export default () => {
     //TODO: What to do with errors?
-
-    const params = useParams();
+    const hostID = localStorage.getItem('host_id')
     const history = useHistory();
     const listings = useSelector(state => state.listings);
     const isGetting = useSelector(state => state.isGetting);
     const dispatch = useDispatch();
 
-    //set host_id in store
-
     useEffect(() => {
         if (listings.length === 0) {
-            dispatch(getData(params.id));
+            dispatch(getData(hostID));
         }
-        dispatch(setHostID(params.id));
+        dispatch(setHostID(hostID));
     }, [])
 
     const handleClick = () => {

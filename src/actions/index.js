@@ -1,7 +1,5 @@
 import { axiosWithAuth } from '../utils';
 
-//These are not exhaustive nor will we necessarily use them all.
-//I'm trying to anticipate what actions will need.
 export const REGISTER_START = "REGISTER_START"; //using loading spinners?
 export const REGISTER_SUCCESS = "REGISTER_SUCCESS";
 export const REGISTER_FAILURE = "REGISTER_FAILURE";
@@ -44,7 +42,7 @@ export const logout = () => dispatch => {
 
 export const getData = hostID => dispatch => {
     dispatch({ type: GET_DATA_START }); //using loading spinners?
-    //axios with auth get call for data when app loads (assuming user has token).
+
     axiosWithAuth()
         .get(`api/restricted/listings/${parseInt(hostID)}`)
         .then(res => {
@@ -61,18 +59,15 @@ export const updateListing = updatedListing => dispatch => {
     axiosWithAuth()
         .put(`api/restricted/listings/${updatedListing.id}`, updatedListing)
         .then(res => {
-            console.log('this is res in updateListing in actions: ', res);
             dispatch({ type: UPDATE_LISTING_SUCCESS, payload: res.data.resource});
         }).catch(err => {
-            //dispatch error
             dispatch({ type: UPDATE_LISTING_FAILURE, payload: err.data });
         });
 }
 
 export const addListing = listing => dispatch => {
     dispatch({ type: ADD_LISTING_START }); //using loading spinners?
-    //axios with auth put call.
-    console.log('this is listing inside of addListing: ', listing);
+
     axiosWithAuth()
         .post(`api/restricted/listings`, listing).then(res => {
             //Change to not an array
@@ -81,7 +76,6 @@ export const addListing = listing => dispatch => {
 }
 
 export const deleteListing = id => dispatch => {
-    //axios with auth delete call.
     axiosWithAuth().delete(`api/restricted/listings/${id}`)
         .then(res => {
             dispatch({ type: DELETE_LISTING_SUCCESS, payload: parseInt(id)});

@@ -4,7 +4,6 @@ import { addListing, updateListing } from '../actions';
 import { useHistory } from 'react-router-dom';
 import { useParams } from 'react-router';
 
-//Defaults as an edit form.
 export default props => {
     const history = useHistory();
     const params = useParams();
@@ -12,11 +11,10 @@ export default props => {
     const hostID = useSelector(state => state.host_id);
     const [isAddingImage, setIsAddingImage] = useState(false);
     const isEditing = useSelector(state => state.isEditing);
-    //sets listing to default or listing object from store if editing
+    
     const [listing, setListing] = useState(isEditing ? 
         useSelector(state => state.listings.find(listing => listing.id === parseInt(params.id))) : {
         host_id: hostID,
-        // id: 0,
         image: '',
         neighborhood: 'Reinickendorf',
         room_type: 'Entire home/apt',
@@ -60,7 +58,6 @@ export default props => {
 
     const addNewListing = e => {
         e.preventDefault();
-        //get the host_id from the state
         const listingToAdd = {...listing, host_id: parseInt(hostID)}; //Change from being hard-coded
         history.push(`/protected/${hostID}`);
         return dispatch(addListing(listingToAdd));
@@ -83,7 +80,6 @@ export default props => {
                 <input type='url' name='image' placeholder='image url...' onChange={handleChange} value={listing.image} />
                 {isAddingImage ? (<img src={listing.image} alt='No Image Found' />) : (<></>)}
                 <label>Neighborhood</label>
-                {/* TODO: Separate street, city, state, zip  required*/}
                 <select name='neighborhood' onChange={handleChange} >
                     {populateHoodOptions()}
                 </select>

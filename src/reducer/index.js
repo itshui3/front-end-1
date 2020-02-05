@@ -23,8 +23,6 @@ import {
     SET_HOST
   } from "../actions";
 
-//optimal price stored in listing object?
-//This is a dummy state. We don't know what the state will look like yet.
 const initialState = {
     isAdding: false,
     isEditing: false,

@@ -7,14 +7,16 @@ export default props => {
     const history = useHistory();
     const listing = useSelector(state => state.listings.find(l => l.id === props.listingID));
     const dispatch = useDispatch();
-    //TODO: add delete functionality
+
     const handleDelete = () => {
         dispatch(deleteListing(listing.id));
     }
+
     const handleEdit = () => {
         dispatch(setIsEditing());
         history.push(`/listing-form/${listing.id}`);
     }
+    
     return (
         <div className='listing-container'>
             <img src={listing.image} alt='listing' />

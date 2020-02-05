@@ -17,15 +17,12 @@ const Login = () => {
 
     const handleChange = event => {
         const { name, value } = event.target
-       // console.log(event.target.name);
-       // console.log(event.target.value);
         setValues({
             ...values, 
             [name]: value
         })
     }
 
-     //Axios to server
     const submitForm = event => {
         event.preventDefault();
 
@@ -33,7 +30,8 @@ const Login = () => {
         .post(`https://fast-scrubland-91418.herokuapp.com/api/auth/login`, values)
         .then(response => {
             localStorage.setItem('token', response.data.token);
-            history.push(`/protected/${response.data.resource.id}`);
+            localStorage.setItem('host_id', response.data.resource.id);
+            history.push(`/protected`);
             setHost(setHostID(response.data.resource.id));
         })
         .catch(error => {
