@@ -1,35 +1,38 @@
 import React, {useState} from 'react';
 import { NavLink } from 'react-router-dom';
 import axios from 'axios';
+import { useHistory } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
+import { setHostID } from '../actions';
 import './Login.css';
 
-const Login = (props) => {
+const Login = () => {
+    const setHost = useDispatch();
+    const history = useHistory();
 
     const[values, setValues] = useState({
         username: "",
         password: ""
     })
 
-    const handleChange = e => {
-       // console.log(event.target.name);
-       // console.log(event.target.value);
+    const handleChange = event => {
+        const { name, value } = event.target
         setValues({
             ...values, 
-            [e.target.name]: e.target.value
+            [event.target.name]: event.target.value
         })
     }
 
-     //Axios to server
     const submitForm = event => {
         event.preventDefault();
-        console.log(values);
 
         axios
         .post(`https://fast-scrubland-91418.herokuapp.com/api/auth/login`, values)
         .then(response => {
-            console.log(response.data);
-            props.history.push("/protected");
             localStorage.setItem('token', response.data.token);
+            localStorage.setItem('host_id', response.data.resource.id);
+            history.push(`/protected`);
+            setHost(setHostID(response.data.resource.id));
         })
         .catch(error => {
             console.log(error)

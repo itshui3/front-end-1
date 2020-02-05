@@ -19,15 +19,15 @@ import {
     ADD_LISTING_SUCCESS,
     ADD_LISTING_FAILURE,
     DELETE_LISTING_SUCCESS,
-    DELETE_LISTING_FAILURE
+    DELETE_LISTING_FAILURE,
+    SET_HOST
   } from "../actions";
 
-//optimal price stored in listing object?
-//This is a dummy state. We don't know what the state will look like yet.
 const initialState = {
     isAdding: false,
     isEditing: false,
     isDeleting: false,
+    isGetting: true,
     error: '',
     token: '',
     host_id: 0,
@@ -55,11 +55,24 @@ const reducer = (state = initialState, action) => {
         case LOGOUT:
             return {}
         case GET_DATA_START: //using loading spinners?
-            return {}
+            return {
+                ...state,
+                isGetting: true,
+                error: ''
+            }
         case GET_DATA_SUCCESS:
-            return {}
+            return {
+                ...state,
+                isGetting: false,
+                listings: action.payload,
+                error: ''
+            }
         case GET_DATA_FAILURE:
-            return {}
+            return {
+                ...state,
+                isGetting: false,
+                error: action.payload
+            }
         case UPDATE_PROFILE_START: //using loading spinners?
             return {}
         case UPDATE_PROFILE_SUCCESS:
@@ -111,9 +124,21 @@ const reducer = (state = initialState, action) => {
                 error: `Something went wrong. ${action.payload}`
             }
         case DELETE_LISTING_SUCCESS:
-            return {}
+            return {
+                ...state,
+                listings: state.listings.filter(listing => listing.id !== action.payload),
+                error: ''
+            }
         case DELETE_LISTING_FAILURE:
-            return {}
+            return {
+                ...state,
+                error: action.payload
+            }
+        case SET_HOST:
+            return {
+                ...state,
+                host_id: action.payload
+            }
         default:
             return state;
     }
