@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useRef } from 'react';
 import { useHistory } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { getData, setHostID } from '../actions';
@@ -11,10 +11,12 @@ export default () => {
     const listings = useSelector(state => state.listings);
     const isGetting = useSelector(state => state.isGetting);
     const dispatch = useDispatch();
+    const initialRender = useRef(true);
 
     useEffect(() => {
-        if (listings.length === 0) {
+        if (initialRender.current) {
             dispatch(getData(hostID));
+            initialRender.current = false;
         }
         dispatch(setHostID(hostID));
     })
