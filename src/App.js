@@ -20,7 +20,7 @@ function App() {
             <a href="https://rg-optimalpricer.netlify.com/">Home</a>
             <NavLink to='/' >Log In</NavLink>
             <NavLink to='/signup' >Sign Up</NavLink>
-            {/* <NavLink to='/protected' >Your Listings</NavLink> */}
+            <NavLink to='/protected' >Your Listings</NavLink>
           </div>
         </nav>
       </header>

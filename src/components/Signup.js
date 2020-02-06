@@ -29,7 +29,7 @@ const Signup = (props) => {
             history.push('/login');
         })
         .catch(error => {
-            console.log(error)
+            console.log(error);
         })
 
         setValues({
