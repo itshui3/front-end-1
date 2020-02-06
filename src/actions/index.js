@@ -11,6 +11,9 @@ export const LOGOUT = "LOGOUT";
 export const GET_DATA_START = "GET_DATA_START"; //using loading spinners?
 export const GET_DATA_SUCCESS = "GET_DATA_SUCCESS";
 export const GET_DATA_FAILURE = "GET_DATA_FAILURE";
+export const GET_PROFILE_START = "GET_PROFILE_START"; //using loading spinners?
+export const GET_PROFILE_SUCCESS = "GET_PROFILE_SUCCESS";
+export const GET_PROFILE_FAILURE = "GET_PROFILE_FAILURE";
 export const UPDATE_PROFILE_START = "UPDATE_PROFILE_START"; //using loading spinners?
 export const UPDATE_PROFILE_SUCCESS = "UPDATE_PROFILE_SUCCESS";
 export const UPDATE_PROFILE_FAILURE = "UPDATE_PROFILE_FAILURE";
@@ -48,6 +51,16 @@ export const getData = hostID => dispatch => {
         .then(res => {
             dispatch({ type: GET_DATA_SUCCESS, payload: res.data.resource});
         }).catch(err => console.log(err));
+}
+
+export const getProfileData = hostID => dispatch => {
+    dispatch({ type: GET_PROFILE_START }); //using loading spinners?
+
+    axiosWithAuth()
+        .get(`api/restricted/hosts/${parseInt(hostID)}`)
+            .then(res => {
+            dispatch({ type: GET_PROFILE_SUCCESS, payload: res.data.resource});
+            }).catch(err => console.log(err));
 }
 
 export const updateProfile = updatedProfile => dispatch => {
