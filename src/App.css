@@ -41,6 +41,7 @@
 }
 
 .nav-container {
+  top: 0;
   display: flex;
   justify-content: space-between;
   width: 100%;

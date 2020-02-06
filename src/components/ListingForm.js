@@ -1,6 +1,10 @@
 import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { addListing, updateListing } from '../actions';
+import { useHistory } from 'react-router-dom';
+import { useParams } from 'react-router';
+import { axiosWithAuth } from '../utils';
+import './ListingForm.css';
 
 import './ListingForm.css'
 
@@ -10,7 +14,8 @@ export default props => {
     const hostID = useSelector(state => state.host_id);
     const [isAddingImage, setIsAddingImage] = useState(false);
     const isEditing = useSelector(state => state.isEditing);
-    //sets listing to default or listing object from store if editing
+    const [price, setPrice] = useState('');
+    
     const [listing, setListing] = useState(isEditing ? 
         useSelector(state => state.listings[props.listingID]) : {
         host_id: 0,
@@ -73,57 +78,85 @@ export default props => {
         return sendListingData(updateListing(listing));
     }
 
+    const getPrice = e => {
+        e.preventDefault();
+        const listingToAdd = {...listing, host_id: parseInt(hostID)};
+        console.log('listingToAdd in getPrice in ListingForm: ', listingToAdd);
+        axiosWithAuth()
+            .post(`api/restricted/listings/getQuote`, listingToAdd)
+            .then(res => {
+                setPrice(res.data.resource.price);
+                console.log('This is res.data.resource in getPrice func in ListingForm: ', res.data.resource)
+            }).catch(err => console.log(err));
+    }
+
     //TODO: set up regex patterns
     return (
-        <div className='container'>
-            <div className='innerContainer'>
-            
+        <div className='listing-form-background'>
+        <div className='form-container'>
             <form onSubmit={isEditing ? editListing : addNewListing} >
                 <div className="blur">
                 {/* Option to upload image? */}
-                <h2 className="text">Tell us about your listing.</h2>
-                <p className="text">In order to get the best results fill out as many of the fields as you can and be as accurate as possible.</p>
-                <label className="FormField__Label">Listing Image</label>
-                <input type='url' className="FormField__Input" name='image' placeholder='image url...' onChange={handleChange} value={listing.image} />
+                <h2>Tell us about your listing.</h2>
+                <p>In order to get the best results fill out as many of the fields as you can and be as accurate as possible.</p>
+                <div className='form-group'>
+                    <label>Listing Image</label>
+                    <input type='url' name='image' placeholder='image url...' onChange={handleChange} value={listing.image} />
+                </div>
+                <div className='image-wrapper'>
+                    {isAddingImage ? (<img src={listing.image} alt='No Image Found' />) : (<h3>Image Appears Here</h3>)}
+                </div>
+                <div className='form-group'>
+                    <label>Neighborhood</label>
+                    <select name='neighborhood' onChange={handleChange} >
+                        {populateHoodOptions()}
+                    </select>
+                </div>
                 
-                <div>
-                {isAddingImage ? (<img src={listing.image} className='imageNew' alt='No Image Found' />) : (<></>)}
-                <label className="FormField__Label">Neighborhood</label>
-                {/* TODO: Separate street, city, state, zip  required*/}
-                <select className="FormField__Input" name='neighborhood' onChange={handleChange} >
-                    {populateOptions()}
-                </select>
+                <div className='form-group'>
+                    <label>Room Type</label>
+                    <select name='room_type' onChange={handleChange} >
+                        {populateRoomTypeOptions()}
+                    </select>
+                </div>
+                
+                <div className='form-group'>
+                    <label>How many bedrooms?</label>
+                    <input type='number' name='bedrooms' placeholder='Number of bedrooms...' onChange={handleChange} value={listing.bedrooms} />
+                </div>
+                
+                <div className='form-group'>
+                    <label>How many bathrooms?</label>
+                    <input type='number' name='bathrooms' placeholder='Number of bathrooms...' onChange={handleChange} value={listing.bathrooms} />
+                </div>
+                
+                <div className='form-group'>
+                    <label>How many beds?</label>
+                    <input type='number' name='beds' placeholder='Number of beds...' onChange={handleChange} value={listing.beds} />
                 </div>
 
-                <div>
-                <label className="FormField__Label">How many bedrooms?</label>
-                <input className="FormField__Input" type='number' name='bedrooms' placeholder='Number of bedrooms...' onChange={handleChange} value={listing.bedrooms} />
+                <div className='form-group'>
+                    <label>Security Deposit</label>
+                    <input type='number' name='deposit' placeholder='Security Deposit' onChange={handleChange} value={listing.deposit} />
                 </div>
-                <div>
-                <label className="FormField__Label">How many bathrooms?</label>
-                <input type='number' className="FormField__Input" name='bathrooms' placeholder='Number of bathrooms...' onChange={handleChange} value={listing.bathrooms} />
+                
+                <div className='form-group'>
+                    <label>Cleaning Fee</label>
+                    <input type='number' name='cleaning_fee' placeholder='Cleaning Fee' onChange={handleChange} value={listing.cleaning_fee} />
                 </div>
-                <div>
-                <label className="FormField__Label">How many beds?</label>
-                <input type='number' className="FormField__Input" name='beds' placeholder=' Number of beds...' onChange={handleChange} value={listing.beds} />
+                
+                <div className='form-group'>
+                    <label>Minimum Nights Stay</label>
+                    <input type='number' name='min_nights' placeholder='Minimum Nights Stay' onChange={handleChange} value={listing.min_nights} />
                 </div>
-                <div>
-                <label className="FormField__Label">Security Deposit</label>
-                <input type='number' className="FormField__Input" name='deposit' placeholder='Security Deposit' onChange={handleChange} value={listing.deposit} />
-                </div>
-                <div>
-                <label className="FormField__Label">Cleaning Fee</label>
-                <input type='number' className="FormField__Input" name='cleaningFee' placeholder='Cleaning Fee' onChange={handleChange} value={listing.cleaningFee} />
-                </div>
-                <div>
-                <label className="FormField__Label">Minimum Nights Stay</label>
-                <input type='number' className="FormField__Input" name='minNights' placeholder='Minimum Nights Stay' onChange={handleChange} value={listing.minNights} />
-                </div>
-                </div>
-                <button type='submit' className="FormField__Button mr-20">Add Listing</button>
+                <div className='button-container'>
+                    {isEditing ? (<button type='submit'>Commit Changes</button>) : (<button type='submit'>Add Listing</button>)}
+                    <button onClick={getPrice}>Get AirPrice</button>
+                </div>        
             </form>
             
             </div>
+        </div>
         </div>
     );
 }
