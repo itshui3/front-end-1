@@ -21,7 +21,7 @@ export default props => {
     return (
         <div className='listing-container'>
             <div className="listingImg" >
-                <img className="imgPanel" src={listing.image} alt='listing' />
+                <img className="imgPanel" src={listing.image} alt='' />
                 <div className="overlay">
                     <p className="optimalPriceHover">${listing.price}</p>
                 </div>

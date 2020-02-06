@@ -10,7 +10,7 @@ export default ({ component: Component, ...rest }) => {
                     return <Component {...props} />
                 } else {
                     //TODO: confirm this path when login is finished.
-                    return <Redirect path='/login' />
+                    return <Redirect to='/login' />
                 }
             }} 
         />

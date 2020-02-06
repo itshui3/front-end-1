@@ -4,6 +4,7 @@ import { addListing, updateListing } from '../actions';
 import { useHistory } from 'react-router-dom';
 import { useParams } from 'react-router';
 import { axiosWithAuth } from '../utils';
+import { Modal, ModalHeader, ModalBody, ModalFooter, Button } from 'reactstrap';
 import './ListingForm.css';
 
 export default props => {
@@ -80,8 +81,14 @@ export default props => {
             .post(`api/restricted/listings/getQuote`, listingToAdd)
             .then(res => {
                 setPrice(res.data.resource.price);
-                console.log('This is res.data.resource in getPrice func in ListingForm: ', res.data.resource)
             }).catch(err => console.log(err));
+    }
+
+    const [modal, setModal] = useState(false);
+
+    const toggle = e => {
+        e.preventDefault();
+        setModal(!modal);
     }
 
     //TODO: set up regex patterns
@@ -97,18 +104,28 @@ export default props => {
                     <input type='url' name='image' placeholder='image url...' onChange={handleChange} value={listing.image} />
                 </div>
                 <div className='image-wrapper'>
-                    {isAddingImage ? (<img src={listing.image} alt='No Image Found' />) : (<h3>Image Appears Here</h3>)}
+                    <img src={listing.image} alt='No Image Found' />
                 </div>
                 <div className='form-group'>
                     <label>Neighborhood</label>
-                    <select name='neighborhood' onChange={handleChange} >
+                    <select name='neighborhood' onChange={handleChange} defaultValue={listing.neighborhood}>
                         {populateHoodOptions()}
                     </select>
+                    <button onClick={toggle} >Info</button>
+                    <Modal size='lg' isOpen={modal} toggle={toggle} className='neighborhood-modal' >
+                        <ModalHeader toggle={toggle}>Price of AirBnB Listings in Berlin by Neighborhood</ModalHeader>
+                        <ModalBody>
+                        <iframe height="550" src="http://optimalprice.stromsy.com/plot/map" frameborder="0" ></iframe>
+                        </ModalBody>
+                        <ModalFooter>
+                        <Button color="danger" onClick={toggle}>Close</Button>
+                        </ModalFooter>
+                    </Modal>
                 </div>
                 
                 <div className='form-group'>
                     <label>Room Type</label>
-                    <select name='room_type' onChange={handleChange} >
+                    <select name='room_type' onChange={handleChange} defaultValue={listing.room_type} >
                         {populateRoomTypeOptions()}
                     </select>
                 </div>
@@ -144,6 +161,7 @@ export default props => {
                 </div>
                 <div className='button-container'>
                     {isEditing ? (<button type='submit'>Commit Changes</button>) : (<button type='submit'>Add Listing</button>)}
+                    {price ? <span className='optimal-price'>${Math.round(price)}</span> : <span></span>}
                     <button onClick={getPrice}>Get AirPrice</button>
                 </div>        
             </form>

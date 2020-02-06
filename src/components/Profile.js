@@ -28,8 +28,6 @@ export default () => {
     })
  
 
-    const [pictures, setPictures] = useState([])
-
 
 
 
@@ -87,9 +85,11 @@ export default () => {
                 <div >
                     <div className='containerProfile'>
                         <div>
+                        <FadeIn >
                         <img 
                         className='pics'
                         src='https://mastodon.sdf.org/system/accounts/avatars/000/108/313/original/035ab20c290d3722.png?1541993604'/>
+                        </FadeIn>
                         </div>
                         <h2>Total Listings: {listingLength}</h2>
                         <div className = 'nextTry'> 
