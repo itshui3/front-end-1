@@ -75,7 +75,7 @@
 .optimalPriceHover {
     white-space: nowrap; 
     color: white;
-    font-size: 5rem;
+    font-size: 4rem;
     position: absolute;
     overflow: hidden;
     top: 50%;
@@ -90,7 +90,7 @@
     }
 }
 
-@media screen and (max-width: 800px){
+@media screen and (max-width: 500px){
     .optimalPriceHover {
     font-size: 5rem;
     }

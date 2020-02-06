@@ -23,7 +23,7 @@ export default props => {
             <div className="listingImg" >
                 <img className="imgPanel" src={listing.image} alt='' />
                 <div className="overlay">
-                    <p className="optimalPriceHover">${listing.price}</p>
+                    <p className="optimalPriceHover">€{listing.price}</p>
                 </div>
             </div>
             <p className="neighborhoodText">{listing.neighborhood}</p>
@@ -33,7 +33,7 @@ export default props => {
             <p className="cardText">Security Deposit: {listing.deposit}</p>
             <p className="cardText">Cleaning Fee: {listing.cleaning_fee}</p>
             </div>
-            <h3 className='optimalPrice'>Optimal Price<br></br>${listing.price}</h3>
+            <h3 className='optimalPrice'>Optimal Price<br></br>€{listing.price}</h3>
             <div className="cardButtonsDiv">
             <button className="buttonDelete" onClick={handleDelete}>Delete</button>
             <button className="buttonEdit" onClick={handleEdit}>Edit</button>
