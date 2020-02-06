@@ -91,12 +91,20 @@ export default props => {
         setModal(!modal);
     }
 
+    const cancel = e => {
+        e.preventDefault();
+        history.push(`/protected/${hostID}`);
+    }
+
     //TODO: set up regex patterns
     return (
         <div className='listing-form-background'>
         <div className='form-container'>
             <form onSubmit={isEditing ? editListing : addNewListing} >
                 {/* Option to upload image? */}
+                <div className='cancel-button-container'>
+                    <Button color="danger" onClick={cancel}>Cancel</Button>
+                </div>
                 <h2>Tell us about your listing.</h2>
                 <p>In order to get the best results fill out as many of the fields as you can and be as accurate as possible.</p>
                 <div className='form-group'>
@@ -107,17 +115,19 @@ export default props => {
                     <img src={listing.image} alt='No Image Found' />
                 </div>
                 <div className='form-group'>
-                    <label>Neighborhood</label>
+                    <div className='hood-header' >
+                        <label>Neighborhood</label>
+                        <Button className='info-button' onClick={toggle} >?</Button>
+                    </div>
                     <select name='neighborhood' onChange={handleChange} defaultValue={listing.neighborhood}>
                         {populateHoodOptions()}
                     </select>
-                    <button onClick={toggle} >Info</button>
                     <Modal size='lg' isOpen={modal} toggle={toggle} className='neighborhood-modal' >
                         <ModalHeader toggle={toggle}>Price of AirBnB Listings in Berlin by Neighborhood</ModalHeader>
-                        <ModalBody>
-                        <iframe height="550" src="http://optimalprice.stromsy.com/plot/map" frameborder="0" ></iframe>
+                        <ModalBody className='modal-body'>
+                        <iframe title='Berlin AirBnB Prices by Neighborhood' className='data-map-iframe' src="http://optimalprice.stromsy.com/plot/map" frameBorder="0" ></iframe>
                         </ModalBody>
-                        <ModalFooter>
+                        <ModalFooter >
                         <Button color="danger" onClick={toggle}>Close</Button>
                         </ModalFooter>
                     </Modal>
@@ -160,9 +170,9 @@ export default props => {
                     <input type='number' name='min_nights' placeholder='Minimum Nights Stay' onChange={handleChange} value={listing.min_nights} />
                 </div>
                 <div className='button-container'>
-                    {isEditing ? (<button type='submit'>Commit Changes</button>) : (<button type='submit'>Add Listing</button>)}
-                    {price ? <span className='optimal-price'>${Math.round(price)}</span> : <span></span>}
-                    <button onClick={getPrice}>Get AirPrice</button>
+                    {isEditing ? (<button className='my-button' type='submit'>Commit Changes</button>) : (<button className='my-button' type='submit'>Add Listing</button>)}
+                    {price ? <span className='optimal-price'>€{Math.round(price)}</span> : <span></span>}
+                    <button className='my-button' onClick={getPrice}>Get AirPrice</button>
                 </div>        
             </form>
         </div>

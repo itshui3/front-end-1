@@ -20,7 +20,10 @@ import {
     ADD_LISTING_FAILURE,
     DELETE_LISTING_SUCCESS,
     DELETE_LISTING_FAILURE,
-    SET_HOST
+    SET_HOST,
+    GET_PROFILE_START,
+    GET_PROFILE_SUCCESS,
+    GET_PROFILE_FAILURE
   } from "../actions";
 
 const initialState = {
@@ -32,10 +35,10 @@ const initialState = {
     token: '',
     host_id: 0,
     profile: {
-        image:'',
-        name:'',
-        email:'',
-        phone:''
+        image: '',
+        name: '',
+        email: '',
+        phone: ''
     },
     listings: [],
 }
@@ -59,6 +62,25 @@ const reducer = (state = initialState, action) => {
             return {}
         case LOGOUT:
             return {}
+            case GET_PROFILE_START: //using loading spinners?
+            return {
+                ...state,
+                isGetting: true,
+                error: ''
+            }
+        case GET_PROFILE_SUCCESS:
+            return {
+                ...state,
+                isGetting: false,
+                profile: action.payload,
+                error: ''
+            }
+        case GET_PROFILE_FAILURE:
+            return {
+                ...state,
+                isGetting: false,
+                error: action.payload
+            }
         case GET_DATA_START: //using loading spinners?
             return {
                 ...state,

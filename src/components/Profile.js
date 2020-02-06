@@ -1,13 +1,15 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import { getData, setHostID } from '../actions';
+import { getData, setHostID, getProfileData, updateProfile } from '../actions';
 import FadeIn from 'react-fade-in';
 import Listing from './Listing';
 import EdiText from 'react-editext'
 
 import './Profile.css'
 
+
+let initialRender = true;
 
 export default () => {
     //TODO: What to do with errors?
@@ -16,12 +18,15 @@ export default () => {
     const listings = useSelector(state => state.listings);
     const isGetting = useSelector(state => state.isGetting);
     const dispatch = useDispatch();
-    const initialRender = useRef(true);
+
+    const profile = useSelector(state => state.profile);
+    // const initialRender = useRef(true);
 
     const [openDiv, setOpenDiv] = useState(false)
 
     const [listingLength, setListing] = useState('idk')
     const [value, setValue] = useState({
+        image:'https://mastodon.sdf.org/system/accounts/avatars/000/108/313/original/035ab20c290d3722.png?1541993604',
         name: 'name',
         number: 'phone Number',
         email: 'youremail@email.com'
@@ -34,15 +39,18 @@ export default () => {
   const handleSave = val => {
     console.log('Edited Value -> ', val)
     setValue(val)
+
+    dispatch(updateProfile(hostID, val))
+
   }
 
 
 
 
     useEffect(() => {
-        if (initialRender.current) {
+        if (initialRender) {
             dispatch(getData(hostID));
-            initialRender.current = false;
+            initialRender = false;
             
         }
         dispatch(setHostID(hostID));
@@ -58,7 +66,8 @@ export default () => {
         setListing(`${newOne}`)
     }
  
-    
+
+
     const propagateListings = () => {
         
         if (isGetting) {
@@ -85,7 +94,7 @@ export default () => {
                             <FadeIn delay='600' transitionDuration='600'>
                             <img 
                             className='pics'
-                            src='https://mastodon.sdf.org/system/accounts/avatars/000/108/313/original/035ab20c290d3722.png?1541993604'/>
+                            src={value.image}/>
                             </FadeIn>
                             </div ><div className='blur'>
                             <div className="boxing">
@@ -119,7 +128,6 @@ export default () => {
                 </FadeIn>
                 
                 <h1 className='topText'>My Listings</h1>
-
                 <div className='profile-listings'>
                     {propagateListings()}
                 </div>
