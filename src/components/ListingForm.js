@@ -171,7 +171,7 @@ export default props => {
                 </div>
                 <div className='button-container'>
                     {isEditing ? (<button className='my-button' type='submit'>Commit Changes</button>) : (<button className='my-button' type='submit'>Add Listing</button>)}
-                    {price ? <span className='optimal-price'>${Math.round(price)}</span> : <span></span>}
+                    {price ? <span className='optimal-price'>€{Math.round(price)}</span> : <span></span>}
                     <button className='my-button' onClick={getPrice}>Get AirPrice</button>
                 </div>        
             </form>
