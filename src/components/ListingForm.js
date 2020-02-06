@@ -124,10 +124,10 @@ export default props => {
                     </select>
                     <Modal size='lg' isOpen={modal} toggle={toggle} className='neighborhood-modal' >
                         <ModalHeader toggle={toggle}>Price of AirBnB Listings in Berlin by Neighborhood</ModalHeader>
-                        <ModalBody>
-                        <iframe height="550" src="http://optimalprice.stromsy.com/plot/map" frameborder="0" ></iframe>
+                        <ModalBody className='modal-body'>
+                        <iframe className='data-map-iframe' src="http://optimalprice.stromsy.com/plot/map" frameBorder="0" ></iframe>
                         </ModalBody>
-                        <ModalFooter>
+                        <ModalFooter >
                         <Button color="danger" onClick={toggle}>Close</Button>
                         </ModalFooter>
                     </Modal>
