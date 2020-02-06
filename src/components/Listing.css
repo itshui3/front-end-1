@@ -14,6 +14,21 @@
 }
 .listing-container:hover {opacity: 1}
 
+@media screen and (max-width: 800px){
+    .listing-container{
+        height: 470px;
+        width: 200px;
+    } 
+  }
+
+@media screen and (max-width: 500px){
+.listing-container{
+    height: 530px;
+    width: 350px;
+    } 
+}
+
+
 .listingImg {
     position: relative;
     width: 100%;
@@ -21,9 +36,24 @@
   
 
 .imgPanel{
-    width: 300px;
     height: 180px;
+    object-fit: cover;
 }
+
+@media screen and (max-width: 800px){
+    .imgPanel{
+        height: 140px;
+        object-fit: cover;
+    }
+}
+
+@media screen and (max-width: 500px){
+    .imgPanel{
+        height: 180px;
+        object-fit: cover;
+    }
+}
+    
 
 .overlay {
     position: absolute;
@@ -45,13 +75,25 @@
 .optimalPriceHover {
     white-space: nowrap; 
     color: white;
-    font-size: 80px;
+    font-size: 5rem;
     position: absolute;
     overflow: hidden;
-    top: 5%;
+    top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
     -ms-transform: translate(-50%, -50%);
+}
+
+@media screen and (max-width: 800px){
+    .optimalPriceHover {
+    font-size: 3rem;
+    }
+}
+
+@media screen and (max-width: 800px){
+    .optimalPriceHover {
+    font-size: 5rem;
+    }
 }
 
 
@@ -71,6 +113,18 @@
 .optimalPrice{
     margin-top: 3px;
     color: red;
+}
+
+@media screen and (max-width: 800px){
+    h3{
+    font-size: 1.2rem;
+    }
+}
+
+@media screen and (max-width: 500px){
+    h3{
+    font-size: 2rem;
+    }
 }
 
 .cardButtonsDiv{
