@@ -91,6 +91,7 @@
     color: #fff;
     background-color: #6c757d;
     border-color: #6c757d;
+    height: 40px;
 
     text-align: center;
     vertical-align: middle;
@@ -138,4 +139,15 @@
 .button-container {
     display: flex;
     justify-content: space-between;
+    height: 90px;
+}
+
+.optimal-price {
+    font-weight: bold;
+    font-size: 72px;
+    color: #FF5A5F;
+}
+
+.neighborhood-modal iframe {
+    width: 100%;
 }
