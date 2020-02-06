@@ -147,3 +147,7 @@
     font-size: 72px;
     color: #FF5A5F;
 }
+
+.neighborhood-modal iframe {
+    width: 100%;
+}
