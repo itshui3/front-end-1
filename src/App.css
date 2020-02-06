@@ -22,13 +22,19 @@
 
 @media screen and (max-width: 500px){
   .nav-container {
-  width: 90%;
+  width: 100%;
   } 
 }
 
 #logo {
   margin: 1.5% 0 0 -40%;
   width: 10%;
+}
+
+@media screen and (max-width: 500px){
+  #logo {
+    margin: 6% 0 0 -50%;
+  } 
 }
 
 .nav-title a{
@@ -45,6 +51,12 @@
   align-items: center;
   width: 15rem;
   margin-right: 3%;
+}
+
+@media screen and (max-width: 500px){
+  .nav-right {
+    width: 20rem;
+  } 
 }
 
 a{

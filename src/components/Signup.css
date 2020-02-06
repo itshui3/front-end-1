@@ -27,6 +27,13 @@
     
 }
 
+@media screen and (max-width: 500px){
+    .signup-panel {
+        height: 500px;
+        width: 300px;
+    } 
+  }
+
 label{
     font-size: 16px;
     font-weight: 500;
@@ -46,6 +53,12 @@ img{
     font-weight: 500;
     color: rgb(72, 72, 72);
 }
+
+@media screen and (max-width: 500px){
+    .signupBtn{
+        width: 65%;
+    } 
+  }
 
 .signupBtn:hover {
     background-color: #4CAF50;

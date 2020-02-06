@@ -24,7 +24,7 @@ const Signup = (props) => {
         event.preventDefault();
 
         axios
-        .post(`https://fast-scrubland-91418.herokuapp.com/api/auth/registerHost`, {username: values.firstName, password: values.password})
+        .post(`https://fast-scrubland-91418.herokuapp.com/api/auth/registerHost`, {username: values.username, password: values.password})
         .then(response => {
             history.push('/login');
         })
