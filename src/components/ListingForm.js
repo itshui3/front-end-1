@@ -6,40 +6,46 @@ import { useParams } from 'react-router';
 import { axiosWithAuth } from '../utils';
 import './ListingForm.css';
 
-import './ListingForm.css'
-
-//Defaults as an edit form.
 export default props => {
-    const sendListingData = useDispatch();
+    const history = useHistory();
+    const params = useParams();
+    const dispatch = useDispatch();
     const hostID = useSelector(state => state.host_id);
     const [isAddingImage, setIsAddingImage] = useState(false);
     const isEditing = useSelector(state => state.isEditing);
     const [price, setPrice] = useState('');
     
     const [listing, setListing] = useState(isEditing ? 
-        useSelector(state => state.listings[props.listingID]) : {
-        host_id: 0,
-        id: 0,
+        useSelector(state => state.listings.find(listing => listing.id === parseInt(params.id))) : {
+        host_id: hostID,
         image: '',
-        street: '',
-        city: '',
-        state: '',
-        zip: '',
+        neighborhood: 'Reinickendorf',
+        room_type: 'Entire home/apt',
         bedrooms: 1,
         bathrooms: 1,
         beds: 1,
-        deposit: 0,
-        cleaningFee: 0,
-        minNights: 1
+        deposit: 5.00,
+        cleaning_fee: 5.00,
+        min_nights: 1
     });
 
     const hoods = ['Reinickendorf', 'Steglitz - Zehlendorf', 'Tempelhof - Schöneberg', 'Lichtenberg', 'Spandau', 'Charlottenburg-Wilm.', 'Friedrichshain-Kreuzberg', 'Pankow', 'Treptow - Köpenick', 'Mitte', 'Marzahn - Hellersdorf', 'Neukölln'];
 
-    const populateOptions = () => {
+    const roomTypes = ['Entire home/apt', 'Private room', 'Shared room', 'Hotel room'];
+
+    const populateHoodOptions = () => {
         let i = -1;
         return hoods.map(hood => {
             i++;
             return (<option key={i} value={hood}>{hood}</option>);
+        })
+    }
+
+    const populateRoomTypeOptions = () => {
+        let i = -1;
+        return roomTypes.map(room => {
+            i++;
+            return (<option key={i} value={room}>{room}</option>);
         })
     }
 
@@ -55,27 +61,15 @@ export default props => {
 
     const addNewListing = e => {
         e.preventDefault();
-        //send listing to store
-        //get the host_id from the state
-        const listingToAdd = {...listing, host_id: hostID};
-        //send info to backend axiosWithAuth
-        //redirect back to profile on success
-        // history.push('/protected');
-        //redirect back to listing form on failure with error
-        // history.push('/listing-form');
-        console.log(listing);
-        //DO NOT SEND ID
-        return sendListingData(addListing(listingToAdd));
+        const listingToAdd = {...listing, host_id: parseInt(hostID)}; //Change from being hard-coded
+        history.push(`/protected/${hostID}`);
+        return dispatch(addListing(listingToAdd));
     }
 
     const editListing = e => {
         e.preventDefault();
-        //send info to backend with axiosWithAuth
-        //redirect back to profile on success
-        // history.push('/protected');
-        //redirect back to listing form on failure with error
-        // history.push('/listing-form');
-        return sendListingData(updateListing(listing));
+        history.push(`/protected/${hostID}`);
+        return dispatch(updateListing(listing));
     }
 
     const getPrice = e => {
@@ -95,7 +89,6 @@ export default props => {
         <div className='listing-form-background'>
         <div className='form-container'>
             <form onSubmit={isEditing ? editListing : addNewListing} >
-                <div className="blur">
                 {/* Option to upload image? */}
                 <h2>Tell us about your listing.</h2>
                 <p>In order to get the best results fill out as many of the fields as you can and be as accurate as possible.</p>
@@ -154,8 +147,6 @@ export default props => {
                     <button onClick={getPrice}>Get AirPrice</button>
                 </div>        
             </form>
-            
-            </div>
         </div>
         </div>
     );

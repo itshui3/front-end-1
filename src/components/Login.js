@@ -19,7 +19,7 @@ const Login = () => {
         const { name, value } = event.target
         setValues({
             ...values, 
-            [event.target.name]: event.target.value
+            [name]: value
         })
     }
 
