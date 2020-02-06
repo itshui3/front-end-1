@@ -47,7 +47,7 @@ export default () => {
         }
         dispatch(setHostID(hostID));
     })
-
+    useEffect(() => {numberedListings()})
     const handleClick = () => {
         history.push('/listing-form');
     }
@@ -57,11 +57,7 @@ export default () => {
         console.log(listings)
         setListing(`${newOne}`)
     }
-    const OpenDiv = () => {
-        setOpenDiv(!openDiv)
-        numberedListings()
-    }
-
+ 
     
     const propagateListings = () => {
         
@@ -78,51 +74,56 @@ export default () => {
         })
     }
     return (
-        <div>
+        <div>  
             <FadeIn >
-            {openDiv===true &&  
-            <FadeIn >
-                <div >
+                <FadeIn delay='500' transitionDuration='600'>
+                <div classsName='container'>
                     <div className='containerProfile'>
+                        
                         <div>
-                        <FadeIn >
-                        <img 
-                        className='pics'
-                        src='https://mastodon.sdf.org/system/accounts/avatars/000/108/313/original/035ab20c290d3722.png?1541993604'/>
-                        </FadeIn>
-                        </div>
-                        <h2>Total Listings: {listingLength}</h2>
-                        <div className = 'nextTry'> 
-                                <EdiText
-                                    className = 'editable'
-                                    type="text"
-                                    value={value.name}
-                                    onSave={handleSave}
-                                    />
-                                <EdiText
-                                    className = 'editable'
-                                    type="email"
-                                    value={value.email}
-                                    onSave={handleSave}
-                                    />
-                                <EdiText
-                                    className = 'editable'
-                                    type="number"
-                                    value={value.number}
-                                    onSave={handleSave}
-                                    />
-                        </div>
-                        <button onClick={handleClick} className="FormField__Button">Add New Listing</button>
+                            <div>
+                            <FadeIn delay='600' transitionDuration='600'>
+                            <img 
+                            className='pics'
+                            src='https://mastodon.sdf.org/system/accounts/avatars/000/108/313/original/035ab20c290d3722.png?1541993604'/>
+                            </FadeIn>
+                            </div ><div className='blur'>
+                        <div className="boxing">
+                            <h2>Total Listings: {listingLength}</h2>
+                            <div className = 'nextTry'> 
+                                    <EdiText
+                                        className = 'editable'
+                                        type="text"
+                                        value={value.name}
+                                        onSave={handleSave}
+                                        />
+                                    <EdiText
+                                        className = 'editable'
+                                        type="email"
+                                        value={value.email}
+                                        onSave={handleSave}
+                                        />
+                                    <EdiText
+                                        className = 'editable'
+                                        type="number"
+                                        value={value.number}
+                                        onSave={handleSave}
+                                        />
+                            </div>
+                            <button onClick={handleClick} className="FormField__Button">Add New Listing</button>
+                            </div>
+                            </div>
+                            </div>
                     </div>
-                </div>
-            </FadeIn>
-            }
-            <h3 className='topText'>My Listings</h3>
-            <button onClick={OpenDiv}  className="FormField__Button">Profile</button>
+                    </div>
+                </FadeIn>
+                
+                <h1 className='topText'>My Listings</h1>
 
-            <div className='profile-listings'>
-                {propagateListings()}
-            </div>
+                <div className='profile-listings'>
+                    {propagateListings()}
+                </div>
+                
             </FadeIn>
         </div>
     );
