@@ -101,11 +101,23 @@ const reducer = (state = initialState, action) => {
                 error: action.payload
             }
         case UPDATE_PROFILE_START: //using loading spinners?
-            return {}
+            return {
+                ...state,
+                isEditing: true,
+                error: ''
+            }
         case UPDATE_PROFILE_SUCCESS:
-            return {}
+            return {
+                ...state,
+                isEditing: false,
+                error: '',
+                profile: action.payload
+            }
         case UPDATE_PROFILE_FAILURE:
-            return {}
+            return {
+                ...state,
+                error: `Something went wrong. ${action.payload}`
+            }
         case UPDATE_LISTING_START: //using loading spinners?
             return {
                 ...state,
