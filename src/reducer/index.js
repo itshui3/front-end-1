@@ -31,7 +31,12 @@ const initialState = {
     error: '',
     token: '',
     host_id: 0,
-    profile: {},
+    profile: {
+        image:'',
+        name:'',
+        email:'',
+        phone:''
+    },
     listings: [],
 }
 
