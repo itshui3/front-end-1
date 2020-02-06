@@ -80,7 +80,6 @@ export default props => {
             .post(`api/restricted/listings/getQuote`, listingToAdd)
             .then(res => {
                 setPrice(res.data.resource.price);
-                console.log('This is res.data.resource in getPrice func in ListingForm: ', res.data.resource)
             }).catch(err => console.log(err));
     }
 
@@ -97,18 +96,18 @@ export default props => {
                     <input type='url' name='image' placeholder='image url...' onChange={handleChange} value={listing.image} />
                 </div>
                 <div className='image-wrapper'>
-                    {isAddingImage ? (<img src={listing.image} alt='No Image Found' />) : (<h3>Image Appears Here</h3>)}
+                    <img src={listing.image} alt='No Image Found' />
                 </div>
                 <div className='form-group'>
                     <label>Neighborhood</label>
-                    <select name='neighborhood' onChange={handleChange} >
+                    <select name='neighborhood' onChange={handleChange} defaultValue={listing.neighborhood}>
                         {populateHoodOptions()}
                     </select>
                 </div>
                 
                 <div className='form-group'>
                     <label>Room Type</label>
-                    <select name='room_type' onChange={handleChange} >
+                    <select name='room_type' onChange={handleChange} defaultValue={listing.room_type} >
                         {populateRoomTypeOptions()}
                     </select>
                 </div>
@@ -144,6 +143,7 @@ export default props => {
                 </div>
                 <div className='button-container'>
                     {isEditing ? (<button type='submit'>Commit Changes</button>) : (<button type='submit'>Add Listing</button>)}
+                    {price ? <span className='optimal-price'>${Math.round(price)}</span> : <span></span>}
                     <button onClick={getPrice}>Get AirPrice</button>
                 </div>        
             </form>

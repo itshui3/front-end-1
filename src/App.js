@@ -8,6 +8,12 @@ import Profile from './components/Profile';
 import PrivateRoute from './components/PrivateRoute';
 
 function App() {
+
+  const logOut = () => {
+    localStorage.removeItem('token');
+    localStorage.removeItem('host_id');
+  }
+
   return (
     <div className="App">
       <header>
@@ -21,6 +27,7 @@ function App() {
             <NavLink to='/' >Log In</NavLink>
             <NavLink to='/signup' >Sign Up</NavLink>
             <NavLink to='/protected' >Your Listings</NavLink>
+            <NavLink onClick={logOut} to={'/'} >Log Out</NavLink>
           </div>
         </nav>
       </header>
@@ -31,6 +38,7 @@ function App() {
         <Route path='/listing-form/:id'><ListingForm /></Route>
         <Route path='/listing-form'><ListingForm /></Route>
         <Route path="/signup"><Signup /></Route>
+        <Route path="/logout"><Login /></Route>
         <Route path="/"><Login /></Route>
       </Switch>
     </div>
