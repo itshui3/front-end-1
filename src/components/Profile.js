@@ -1,8 +1,10 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { getData, setHostID } from '../actions';
 import Listing from './Listing';
+
+let initialRender = true;
 
 export default () => {
     //TODO: What to do with errors?
@@ -11,12 +13,12 @@ export default () => {
     const listings = useSelector(state => state.listings);
     const isGetting = useSelector(state => state.isGetting);
     const dispatch = useDispatch();
-    const initialRender = useRef(true);
+    // const initialRender = useRef(true);
 
     useEffect(() => {
-        if (initialRender.current) {
+        if (initialRender) {
             dispatch(getData(hostID));
-            initialRender.current = false;
+            initialRender = false;
         }
         dispatch(setHostID(hostID));
     })
