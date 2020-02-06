@@ -30,7 +30,11 @@ function App() {
         <Route path='/listing-form/:id'><ListingForm /></Route>
         <Route path='/listing-form'><ListingForm /></Route>
         <Route path="/signup"><Signup /></Route>
-        <Route path="/"><Login /></Route>
+        <Route
+            exact
+            path="/"
+            render={props => <Login {...props}/>}
+          />
       </Switch>
     </div>
   );
