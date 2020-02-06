@@ -8,10 +8,15 @@ import EdiText from 'react-editext'
 
 import './Profile.css'
 
-
+const initialItem = {
+    image:'https://mastodon.sdf.org/system/accounts/avatars/000/108/313/original/035ab20c290d3722.png?1541993604',
+    name: 'name',
+    number: 'phone Number',
+    email: 'youremail@email.com'
+}
 let initialRender = true;
 
-export default () => {
+export default (props) => {
     //TODO: What to do with errors?
     const hostID = localStorage.getItem('host_id')
     const history = useHistory();
@@ -20,29 +25,43 @@ export default () => {
     const dispatch = useDispatch();
 
     const profile = useSelector(state => state.profile);
+    console.log(profile)
     // const initialRender = useRef(true);
 
     const [openDiv, setOpenDiv] = useState(false)
 
     const [listingLength, setListing] = useState('idk')
-    const [value, setValue] = useState({
-        image:'https://mastodon.sdf.org/system/accounts/avatars/000/108/313/original/035ab20c290d3722.png?1541993604',
-        name: 'name',
-        number: 'phone Number',
-        email: 'youremail@email.com'
-    })
+    const [value, setValue] = useState(initialItem)
  
+    const openTheDiv =()=>{
+        setOpenDiv(!openDiv)
+    }
 
 
 
 
-  const handleSave = val => {
-    console.log('Edited Value -> ', val)
-    setValue(val)
 
-    dispatch(updateProfile(hostID, val))
 
-  }
+    const handleChange = e => {
+        e.preventDefault();
+        let value = e.target.value;
+       
+        setValue({
+            ...value,
+            [e.target.name]: value
+        })
+    }
+
+
+
+  const handleSave= e => {
+      e.preventDefault()
+    setValue(e)
+    history.push(`/protected/${hostID}`);
+    return  dispatch(updateProfile(hostID));
+}
+
+
 
 
 
@@ -94,7 +113,14 @@ export default () => {
                             <FadeIn delay='600' transitionDuration='600'>
                             <img 
                             className='pics'
-                            src={value.image}/>
+                            src={value.image}/><button onClick={openTheDiv}>edit Image</button>
+                            {openDiv===true && 
+                                        <EdiText
+                                        className = 'editable'                                                                                      
+                                        type="text"
+                                        value={value.image}
+                                        onSave={handleSave}
+                                        />}
                             </FadeIn>
                             </div ><div className='blur'>
                             <div className="boxing">
@@ -118,6 +144,7 @@ export default () => {
                                         value={value.number}
                                         onSave={handleSave}
                                         />
+                                       <button onClick={handleChange}>ADD </button>
                             </div>
                             <button onClick={handleClick} className="FormField__Button">Add New Listing</button>
                             </div>
