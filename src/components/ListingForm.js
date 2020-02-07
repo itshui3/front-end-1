@@ -125,7 +125,7 @@ export default props => {
                     <Modal size='lg' isOpen={modal} toggle={toggle} className='neighborhood-modal' >
                         <ModalHeader toggle={toggle}>Price of AirBnB Listings in Berlin by Neighborhood</ModalHeader>
                         <ModalBody className='modal-body'>
-                        <iframe title='Berlin AirBnB Prices by Neighborhood' className='data-map-iframe' src="http://optimalprice.stromsy.com/plot/map" frameBorder="0" ></iframe>
+                        <iframe title='Berlin AirBnB Prices by Neighborhood' className='data-map-iframe' src="https://optimalprice.stromsy.com/plot/map" frameBorder="0" ></iframe>
                         </ModalBody>
                         <ModalFooter >
                         <Button color="danger" onClick={toggle}>Close</Button>
