@@ -80,16 +80,3 @@ a:hover{
     font-size: 0.7rem;
   } 
 }
-
-
-
-.listing-container {
-  width: 400px;
-  margin: 20px;
-}
-
-.profile-listings {
-  display: flex;
-  justify-content: space-between;
-  flex-wrap: wrap;
-}
