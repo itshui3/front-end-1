@@ -55,7 +55,7 @@ export default (props) => {
     }
 
     const handlePhoneSave = val => {
-        console.log('this is val in handlePhoneSave: ', val);
+        console.log('this is val in handlePhoneSave: ', val.length);
         setValue({...value, phone: val});
         dispatch(updateProfile(hostID, {...value, phone: val}));
     }
