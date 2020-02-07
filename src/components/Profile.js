@@ -101,13 +101,21 @@ export default (props) => {
     }
 
     useEffect(() => {
-        if (initialRender) {
-            dispatch(getData(hostID));
-            initialRender = false;
-            dispatch(getProfileData(hostID));
-        }
         dispatch(setHostID(hostID));
     });
+
+    const getAllData = async () => {
+        if (initialRender) {
+            dispatch(getData(hostID));
+            dispatch(getProfileData(hostID));
+            initialRender = false;
+        }
+    }
+
+    getAllData().then(() => {
+        setValue(profile);
+    })
+    
     
     const propagateListings = () => {
         if (isGetting) {
