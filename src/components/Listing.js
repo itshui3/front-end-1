@@ -30,8 +30,8 @@ export default props => {
             <div className="cardInfo">
             <p className="cardText">Beds: {listing.bedrooms}</p>
             <p className="cardText">Baths: {listing.bathrooms}</p>
-            <p className="cardText">Security Deposit: {listing.deposit}</p>
-            <p className="cardText">Cleaning Fee: {listing.cleaning_fee}</p>
+            <p className="cardText">Security Deposit: €{listing.deposit}</p>
+            <p className="cardText">Cleaning Fee: €{listing.cleaning_fee}</p>
             </div>
             <h3 className='optimalPrice'>Optimal Price<br></br>€{listing.price}</h3>
             <div className="cardButtonsDiv">
