@@ -76,7 +76,6 @@ export default props => {
     const getPrice = e => {
         e.preventDefault();
         const listingToAdd = {...listing, host_id: parseInt(hostID)};
-        console.log('listingToAdd in getPrice in ListingForm: ', listingToAdd);
         axiosWithAuth()
             .post(`api/restricted/listings/getQuote`, listingToAdd)
             .then(res => {

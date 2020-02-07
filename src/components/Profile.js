@@ -72,7 +72,6 @@ export default (props) => {
 
     const numberedListings = () =>{
         let newOne = listings.length
-        console.log('this is listings in numberedListings in Profile: ', listings)
         setListing(`${newOne}`)
     }
 
