@@ -45,10 +45,10 @@ const Signup = (props) => {
                 <h1>Sign Up</h1>
                 <form onSubmit={submitForm}>
                     <div>
-                        <input className="input-panel" name="username" type="text" value={values.username} onChange={handleChange} placeholder="Create Username"/>
+                        <input className="input-panel" name="username" type="text" value={values.username} onChange={handleChange} placeholder="Create Username" required/>
                     </div>
                     <div>
-                        <input className="input-panel" name="password" type="password" value={values.password} onChange={handleChange} placeholder="Create Password"/>
+                        <input className="input-panel" name="password" type="password" value={values.password} onChange={handleChange} placeholder="Create Password" required/>
                     </div>
                     <button className="signupBtn" type="submit">Sign up</button>
                     <div className="signup-panel-btm">

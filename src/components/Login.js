@@ -51,10 +51,10 @@ const Login = () => {
                 <h1>User Log In</h1>
                 <form onSubmit={submitForm}>
                     <div>
-                        <input className="input-panel" name="username" type="text" value={values.username} onChange={handleChange} placeholder="Username"/>
+                        <input className="input-panel" name="username" type="text" value={values.username} onChange={handleChange} placeholder="Username" required/>
                     </div>
                     <div>
-                        <input className="input-panel" name="password" type="password" value={values.password} onChange={handleChange} placeholder="Password"/>
+                        <input className="input-panel" name="password" type="password" value={values.password} onChange={handleChange} placeholder="Password" required/>
                     </div>
                     <button className="loginBtn" type="submit">Log In</button>
                     <div className="login-panel-btm">
