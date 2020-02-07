@@ -63,9 +63,10 @@ export const getProfileData = hostID => dispatch => {
             }).catch(err => console.log(err));
 }
 
-export const updateProfile = (updatedProfile, hostID) => dispatch => {
+export const updateProfile = (hostID, updatedProfile) => dispatch => {
     dispatch({ type: UPDATE_PROFILE_START }); //using loading spinners?
     //axios with auth put call.
+    console.log('this is updatedProfile in updateProfile in actions: ', updatedProfile);
     axiosWithAuth()
         .put(`api/restricted/hosts/${hostID}`, updatedProfile)
         .then(res => {
