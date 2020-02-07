@@ -8,9 +8,17 @@ import Listing from './Listing';
 import EdiText from 'react-editext';
 import './Profile.css';
 
+import './Profile.css'
+
+const initialItem = {
+    image:'https://mastodon.sdf.org/system/accounts/avatars/000/108/313/original/035ab20c290d3722.png?1541993604',
+    name: 'name',
+    number: 'phone Number',
+    email: 'youremail@email.com'
+}
 let initialRender = true;
 
-export default () => {
+export default (props) => {
     //TODO: What to do with errors?
     const hostID = localStorage.getItem('host_id')
     const history = useHistory();
@@ -47,6 +55,7 @@ export default () => {
     }
 
     const handlePhoneSave = val => {
+        console.log('this is val in handlePhoneSave: ', val);
         setValue({...value, phone: val});
         dispatch(updateProfile(hostID, {...value, phone: val}));
     }
@@ -75,6 +84,20 @@ export default () => {
         e.preventDefault();
         toggle();
         setValue({...value, image: profilePic});
+        dispatch(updateProfile(hostID, {...value, image: profilePic}));
+    }
+
+    const [openDiv, setOpenDiv] = useState(false)
+ 
+    const openTheDiv =()=>{
+        setOpenDiv(!openDiv)
+    }
+
+    const handleSave = e => {
+        e.preventDefault();
+        setValue(e);
+        history.push(`/protected/${hostID}`);
+        return  dispatch(updateProfile(hostID));
     }
 
     useEffect(() => {
@@ -109,7 +132,7 @@ export default () => {
         <div>  
             <FadeIn >
                 <FadeIn delay='500' transitionDuration='600'>
-                <div className='container'>
+                <div>
                     <div className='containerProfile'>
                         
                         <div>
@@ -134,22 +157,26 @@ export default () => {
                             <div className='blur'>
                             <div className="boxing">
                             <h2>Total Listings: {listingLength}</h2>
-                            <div className = 'nextTry'> 
+                            <div className='nextTry'> 
                                 <EdiText
+                                    buttonsAlign='before'
                                     className = 'editable'                   
                                     type="text"
                                     value={value.name}
                                     onSave={handleNameSave}
                                     />
                                 <EdiText
+                                    buttonsAlign='before'
                                     className = 'editable'
                                     type="email"
                                     value={value.email}
                                     onSave={handleEmailSave}
                                     />
                                 <EdiText
+                                    buttonsAlign='before'
                                     className = 'editable'
-                                    type="number"
+                                    type="tel"
+                                    pattern="[0-9]{10}"
                                     value={value.phone}
                                     onSave={handlePhoneSave}
                                     />
@@ -161,12 +188,10 @@ export default () => {
                     </div>
                     </div>
                 </FadeIn>
-                
                 <h1 className='topText'>My Listings</h1>
                 <div className='profile-listings'>
                     {propagateListings()}
                 </div>
-                
             </FadeIn>
         </div>
     );
