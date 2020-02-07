@@ -113,7 +113,7 @@ export default (props) => {
                             <FadeIn delay='600' transitionDuration='600'>
                             <img 
                             className='pics'
-                            src={value.image}/><button onClick={openTheDiv}>edit Image</button>
+                            src={value.image}/><button className = 'text'  onClick={openTheDiv}>edit Image</button>
                             {openDiv===true && 
                                         <EdiText
                                         className = 'editable'                                                                                      
@@ -144,7 +144,7 @@ export default (props) => {
                                         value={value.number}
                                         onSave={handleSave}
                                         />
-                                       <button onClick={handleChange}>ADD </button>
+                                       <button className = 'text' onClick={handleChange}>ADD </button>
                             </div>
                             <button onClick={handleClick} className="FormField__Button">Add New Listing</button>
                             </div>
