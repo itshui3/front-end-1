@@ -8,14 +8,6 @@ import Listing from './Listing';
 import EdiText from 'react-editext';
 import './Profile.css';
 
-import './Profile.css'
-
-const initialItem = {
-    image:'https://mastodon.sdf.org/system/accounts/avatars/000/108/313/original/035ab20c290d3722.png?1541993604',
-    name: 'name',
-    number: 'phone Number',
-    email: 'youremail@email.com'
-}
 let initialRender = true;
 
 export default (props) => {
@@ -35,6 +27,7 @@ export default (props) => {
         email: 'youremail@email.com'
     }
 
+    //If their is no value for a key value pair in state, apply from initialProfileValues
     const setInitialValues = () => {
         let initialValues = {}
         profile.image ? initialValues.image = profile.image : initialValues.image = initialProfileValues.image;
@@ -55,7 +48,6 @@ export default (props) => {
     }
 
     const handlePhoneSave = val => {
-        console.log('this is val in handlePhoneSave: ', val.length);
         setValue({...value, phone: val});
         dispatch(updateProfile(hostID, {...value, phone: val}));
     }
@@ -65,7 +57,6 @@ export default (props) => {
         dispatch(updateProfile(hostID, {...value, email: val}));
     }
 
-    useEffect(() => {numberedListings()})
     const handleClick = () => {
         history.push('/listing-form');
     }
@@ -84,12 +75,6 @@ export default (props) => {
         toggle();
         setValue({...value, image: profilePic});
         dispatch(updateProfile(hostID, {...value, image: profilePic}));
-    }
-
-    const [openDiv, setOpenDiv] = useState(false)
- 
-    const openTheDiv =()=>{
-        setOpenDiv(!openDiv)
     }
 
     const handleSave = e => {
@@ -113,6 +98,7 @@ export default (props) => {
 
     getAllData().then(() => {
         setValue(profile);
+        numberedListings();
     })
     
     
@@ -139,60 +125,60 @@ export default (props) => {
         <div>  
             <FadeIn >
                 <FadeIn delay='500' transitionDuration='600'>
-                <div>
-                    <div className='containerProfile'>
-                        
-                        <div>
+                    <div>
+                        <div className='containerProfile'>
+                            
                             <div>
-                            <FadeIn delay='600' transitionDuration='600'>
-                                {/* ADD modal that appears when img is clicked to change profile pic. */}
-                                <img onClick={toggle}
-                                className='pics'
-                                src={value.image}/>
-                                <Modal size='lg' isOpen={modal} toggle={toggle} className='neighborhood-modal' >
-                                    <ModalHeader toggle={toggle}>Profile Picture</ModalHeader>
-                                    <ModalBody className='modal-body profile-pic-modal-body'>
-                                        <Input type='url' name='image' placeholder='image url...' onChange={handleChange} value={profilePic} />
-                                        <img src={profilePic} alt='No Image Found' />
-                                    </ModalBody>
-                                    <ModalFooter >
-                                    <Button color="primary" onClick={handleProfilePicSave}>Save</Button>
-                                    </ModalFooter>
-                                </Modal>
-                            </FadeIn>
-                            </div >
-                            <div className='blur'>
-                            <div className="boxing">
-                            <h2>Total Listings: {listingLength}</h2>
-                            <div className='nextTry'> 
-                                <EdiText
-                                    buttonsAlign='before'
-                                    className = 'editable'                   
-                                    type="text"
-                                    value={value.name}
-                                    onSave={handleNameSave}
-                                    />
-                                <EdiText
-                                    buttonsAlign='before'
-                                    className = 'editable'
-                                    type="email"
-                                    value={value.email}
-                                    onSave={handleEmailSave}
-                                    />
-                                <EdiText
-                                    buttonsAlign='before'
-                                    className = 'editable'
-                                    type="tel"
-                                    pattern="[0-9]{10}"
-                                    value={value.phone}
-                                    onSave={handlePhoneSave}
-                                    />
+                                <div>
+                                    <FadeIn delay='600' transitionDuration='600'>
+                                        {/* ADD modal that appears when img is clicked to change profile pic. */}
+                                        <img onClick={toggle}
+                                        className='pics'
+                                        src={value.image}/>
+                                        <Modal size='lg' isOpen={modal} toggle={toggle} className='neighborhood-modal' >
+                                            <ModalHeader toggle={toggle}>Profile Picture</ModalHeader>
+                                            <ModalBody className='modal-body profile-pic-modal-body'>
+                                                <Input type='url' name='image' placeholder='image url...' onChange={handleChange} value={profilePic} />
+                                                <img src={profilePic} alt='No Image Found' />
+                                            </ModalBody>
+                                            <ModalFooter >
+                                            <Button color="primary" onClick={handleProfilePicSave}>Save</Button>
+                                            </ModalFooter>
+                                        </Modal>
+                                    </FadeIn>
+                                </div >
+                                <div className='blur'>
+                                    <div className="boxing">
+                                        <h2>Total Listings: {listingLength}</h2>
+                                        <div className='nextTry'> 
+                                            <EdiText
+                                                buttonsAlign='before'
+                                                className = 'editable'                   
+                                                type="text"
+                                                value={value.name}
+                                                onSave={handleNameSave}
+                                                />
+                                            <EdiText
+                                                buttonsAlign='before'
+                                                className = 'editable'
+                                                type="email"
+                                                value={value.email}
+                                                onSave={handleEmailSave}
+                                                />
+                                            <EdiText
+                                                buttonsAlign='before'
+                                                className = 'editable'
+                                                type="tel"
+                                                pattern="[0-9]{10}"
+                                                value={value.phone}
+                                                onSave={handlePhoneSave}
+                                                />
+                                        </div>
+                                        <button onClick={handleClick} className="FormField__Button">Add New Listing</button>
+                                    </div>
+                                </div>
                             </div>
-                            <button onClick={handleClick} className="FormField__Button">Add New Listing</button>
-                            </div>
-                            </div>
-                            </div>
-                    </div>
+                        </div>
                     </div>
                 </FadeIn>
                 <h1 className='topText'>My Listings</h1>
