@@ -23,11 +23,13 @@ const Login = () => {
         })
     }
 
+    
+
     const submitForm = event => {
         event.preventDefault();
 
         axios
-        .post(`https://fast-scrubland-91418.herokuapp.com/api/auth/login`, values)
+        .post(`${process.env.BE_URL}/api/auth/login`, values)
         .then(response => {
             localStorage.setItem('token', response.data.token);
             localStorage.setItem('host_id', response.data.resource.id);
