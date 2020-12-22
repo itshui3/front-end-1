@@ -2,7 +2,7 @@ import axios from 'axios';
 
 export default () => {
     return axios.create({
-        baseURL: "https://fast-scrubland-91418.herokuapp.com/",
+        baseURL: process.env.BE_URL,
         headers: {
             authorization: localStorage.getItem("token")
         }
