@@ -24,7 +24,7 @@ const Signup = (props) => {
         event.preventDefault();
 
         axios
-        .post(`${process.env.BE_URL}/api/auth/registerHost`, {username: values.username, password: values.password})
+        .post(`$https://price-op.herokuapp.com/api/auth/registerHost`, {username: values.username, password: values.password})
         .then(response => {
             history.push('/login');
         })
