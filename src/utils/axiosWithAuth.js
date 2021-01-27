@@ -2,7 +2,7 @@ import axios from 'axios';
 
 export default () => {
     return axios.create({
-        baseURL: process.env.BE_URL,
+        baseURL: "https://price-op.herokuapp.com/",
         headers: {
             authorization: localStorage.getItem("token")
         }
