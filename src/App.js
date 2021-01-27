@@ -14,6 +14,10 @@ function App() {
     localStorage.removeItem('host_id');
   }
 
+  React.useEffect(() => {
+    console.log('BE_URL', process.env.BE_URL)
+  }, [])
+
   return (
     <div className="App">
       <header>
