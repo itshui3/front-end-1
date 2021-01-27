@@ -29,7 +29,7 @@ const Login = () => {
         event.preventDefault();
 
         axios
-        .post(`$https://price-op.herokuapp.com/api/auth/login`, values)
+        .post(`https://price-op.herokuapp.com/api/auth/login`, values)
         .then(response => {
             localStorage.setItem('token', response.data.token);
             localStorage.setItem('host_id', response.data.resource.id);
